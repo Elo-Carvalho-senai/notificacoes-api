@@ -1,24 +1,29 @@
-const express = require('express');
+// src/app.js
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
 const app = express();
-
-// 🔥 SEMPRE NO TOPO
+// Middlewares
 app.use(express.json());
-
-// ROTAS
-const participanteRoutes = require('./routes/participanteRoutes');
-const eventoRoutes = require('./routes/eventoRoutes');
-const inscricaoRoutes = require('./routes/inscricaoRoutes');
-
-app.use("/participantes", participanteRoutes);
+// Documentação Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Rotas
+const eventoRoutes = require("./routes/eventoRoutes");
+const participanteRoutes = require("./routes/participanteRoutes");
+const inscricaoRoutes = require("./routes/inscricaoRoutes");
 app.use("/eventos", eventoRoutes);
+app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
-
-// ROTA TESTE
+// Rota raiz
 app.get("/", (req, res) => {
     res.json({
-        mensagem: "API funcionando 🚀"
+        mensagem: "API de Notificações",
+        documentacao: "/api-docs",
+        rotas: {
+            eventos: "/eventos",
+            participantes: "/participantes",
+            inscricoes: "/inscricoes",
+        },
     });
 });
-
-// EXPORTA SÓ NO FINAL
 module.exports = app;
