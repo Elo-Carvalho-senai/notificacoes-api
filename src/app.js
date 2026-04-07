@@ -4,7 +4,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const cors = require("cors");
 
-// 👇 IMPORTA TODOS OS MIDDLEWARES PRIMEIRO
+// MIDDLEWARES GLOBAIS
 const logger = require("./middlewares/logger");
 const responseTime = require("./middlewares/responseTime");
 const errorHandler = require("./middlewares/errorHandler");
@@ -42,6 +42,11 @@ app.get("/", (req, res) => {
         },
     });
 });
+
+// MIDDLEWARES DE ERRO (sempre por último!)
+// ============================================
+const notFound = require("./middlewares/notFound");
+const errorHandler = require("./middlewares/errorHandler");
 
 // 👇 SEMPRE POR ÚLTIMO
 app.use(notFound);
