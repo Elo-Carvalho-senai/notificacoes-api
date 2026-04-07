@@ -3,13 +3,25 @@
 let inscricoes = [];
 let idAtual = 1;
 
-// CRIAR
+// CRIAR - Simplificado (Verificações de existência agora estão no Service)
 function criar(eventoId, participanteId) {
+    // 1. Verificar duplicata (Regra de dados: não pode repetir a mesma dupla)
+    const jaInscrito = inscricoes.find(
+        (i) => i.eventoId === eventoId && i.participanteId === participanteId
+    );
+
+    if (jaInscrito) {
+        // Lançando erro para o Service capturar
+        throw new Error("Participante já inscrito neste evento");
+    }
+
+    // 2. Criar o objeto conforme o padrão solicitado
     const nova = {
         id: idAtual++,
         eventoId,
         participanteId,
-        status: "ativa"
+        dataInscricao: new Date().toISOString(), // Adicionado para seguir o padrão
+        status: "confirmada" // Mudado de "ativa" para "confirmada" como no exemplo
     };
 
     inscricoes.push(nova);
