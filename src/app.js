@@ -43,11 +43,6 @@ app.get("/", (req, res) => {
     });
 });
 
-// MIDDLEWARES DE ERRO (sempre por último!)
-// ============================================
-const notFound = require("./middlewares/notFound");
-const errorHandler = require("./middlewares/errorHandler");
-
 // 👇 SEMPRE POR ÚLTIMO
 app.use(notFound);
 app.use(errorHandler);
