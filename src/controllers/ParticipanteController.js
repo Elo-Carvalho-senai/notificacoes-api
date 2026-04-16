@@ -1,5 +1,3 @@
-// src/controllers/ParticipanteController.js
-
 const ParticipanteModel = require("../models/ParticipanteModel");
 const { NotFoundError, ValidationError } = require("../errors/AppError");
 

@@ -1,5 +1,3 @@
-// src/controllers/InscricaoController.js
-
 const InscricaoModel = require("../models/InscricaoModel");
 const EventoModel = require("../models/EventoModel");
 const ParticipanteModel = require("../models/ParticipanteModel");

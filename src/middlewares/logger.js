@@ -1,4 +1,3 @@
-// src/middlewares/logger.js
 function logger(req, res, next) {
     const dataHora = new Date().toLocaleString("pt-BR");
     const metodo = req.method;

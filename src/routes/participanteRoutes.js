@@ -1,4 +1,3 @@
-// src/routes/participanteRoutes.js
 const express = require("express");
 const router = express.Router();
 const ParticipanteController = require("../controllers/ParticipanteController");

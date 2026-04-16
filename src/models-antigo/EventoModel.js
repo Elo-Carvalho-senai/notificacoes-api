@@ -1,4 +1,3 @@
-// src/models/EventoModel.js
 // "Banco de dados" temporário — array em memória
 let eventos = [
     {

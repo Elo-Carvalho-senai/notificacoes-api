@@ -1,4 +1,3 @@
-// src/routes/eventoRoutes.js
 const express = require("express");
 const router = express.Router();
 const EventoController = require("../controllers/EventoController");
