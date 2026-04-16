@@ -42,4 +42,5 @@ const Evento = sequelize.define(
         underscored: true, // usa snake_case nas colunas (created_at em vez de createdAt)
     },
 );
+
 module.exports = Evento;

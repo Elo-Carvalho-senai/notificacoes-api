@@ -6,9 +6,11 @@ const {
     minLength,
     validar,
 } = require("../helpers/validators");
+
 function listarTodos() {
     return EventoModel.listarTodos();
 }
+
 function buscarPorId(id) {
     const evento = EventoModel.buscarPorId(id);
     if (!evento) {
@@ -16,6 +18,7 @@ function buscarPorId(id) {
     }
     return evento;
 }
+
 function criar(dados) {
     const { nome, descricao, data, local, capacidade } = dados;
     // Validação
@@ -30,6 +33,7 @@ function criar(dados) {
     }
     return EventoModel.criar({ nome, descricao, data, local, capacidade });
 }
+
 function atualizar(id, dados) {
 
     const { nome, capacidade } = dados;
@@ -47,6 +51,7 @@ function atualizar(id, dados) {
     }
     return eventoAtualizado;
 }
+
 function deletar(id) {
     const deletado = EventoModel.deletar(id);
     if (!deletado) {
@@ -54,6 +59,7 @@ function deletar(id) {
     }
     return true;
 }
+
 module.exports = {
     listarTodos,
     buscarPorId,

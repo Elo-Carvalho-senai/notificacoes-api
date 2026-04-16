@@ -1,5 +1,3 @@
-// src/middlewares/errorHandler.js
-
 function errorHandler(err, req, res, next) {
     // Se for um erro nosso (AppError), usamos o statusCode dele
     const statusCode = err.statusCode || 500;

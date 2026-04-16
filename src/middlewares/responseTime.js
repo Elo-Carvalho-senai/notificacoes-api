@@ -7,4 +7,5 @@ function responseTime(req, res, next) {
     });
     next();
 }
+
 module.exports = responseTime;

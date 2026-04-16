@@ -1,5 +1,3 @@
-// src/models/InscricaoModel.js
-
 let inscricoes = [];
 let idAtual = 1;
 

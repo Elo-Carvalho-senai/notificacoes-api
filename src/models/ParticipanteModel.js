@@ -32,4 +32,5 @@ const Participante = sequelize.define(
         underscored: true,
     },
 );
+
 module.exports = Participante;

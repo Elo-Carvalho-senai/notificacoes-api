@@ -1,8 +1,4 @@
-// src/helpers/validators.js
-
-/**
-* Verifica se um valor existe e não é string vazia
-*/
+// Verifica se um valor existe e não é string vazia
 function isRequired(valor, nomeCampo) {
     if (valor === undefined || valor === null) {
         return `${nomeCampo} é obrigatório`;
@@ -13,9 +9,8 @@ function isRequired(valor, nomeCampo) {
     return null; // null = sem erro
 }
 
-/**
-* Verifica se é um e-mail válido (validação simples)
-*/
+// Verifica se é um e-mail válido (validação simples)
+
 function isEmail(valor) {
     if (!valor) return null; // Se não foi enviado, não valida (use isRequired para isso)
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,9 +20,8 @@ function isEmail(valor) {
     return null;
 }
 
-/**
-* Verifica se é um número inteiro positivo
-*/
+// Verifica se é um número inteiro positivo
+
 function isPositiveInteger(valor, nomeCampo) {
     if (valor === undefined || valor === null) return null;
     if (!Number.isInteger(valor) || valor <= 0) {
@@ -36,9 +30,8 @@ function isPositiveInteger(valor, nomeCampo) {
     return null;
 }
 
-/**
-* Verifica se uma string tem tamanho mínimo
-*/
+// Verifica se uma string tem tamanho mínimo
+
 function minLength(valor, min, nomeCampo) {
     if (!valor) return null;
 
@@ -48,9 +41,8 @@ function minLength(valor, min, nomeCampo) {
     return null;
 }
 
-/**
-* Executa um array de validações e retorna os erros encontrados
-*/
+// Executa um array de validações e retorna os erros encontrados
+
 function validar(validacoes) {
     const erros = validacoes.filter((erro) => erro !== null);
     return erros.length > 0 ? erros : null;

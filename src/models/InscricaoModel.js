@@ -26,4 +26,5 @@ const Inscricao = sequelize.define(
         underscored: true,
     },
 );
+
 module.exports = Inscricao;

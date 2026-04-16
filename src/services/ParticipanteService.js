@@ -1,4 +1,3 @@
-// src/services/ParticipanteService.js
 const ParticipanteModel = require("../models/ParticipanteModel");
 const { NotFoundError, ValidationError } = require("../errors/AppError");
 const {
