@@ -38,15 +38,16 @@
 ## 5. Matriz de Responsabilidades (RACI)
 Distribuição de tarefas para a conclusão da Fase A e desenvolvimento técnico.
 
+|
 | Atividade | Maria Eloisa | Maria Fernandes | Raissa | Isadora |
 |:---|:---:|:---:|:---:|:---:|
-| Models / Migrations | **R** | C | I | I |
-| Controllers / Routes | I | **R** | C | I |
-| Services / Negócio | I | I | **R** | C |
-| Validações / Middlewares | C | I | I | **R** |
-| Documentação Swagger | **R** | I | C | I |
-| Testes Postman | C | **R** | I | I |
-| Deploy | I | C | I | **R** |
+| Models / Migrations | **R** | I | I | C |
+| Controllers / Routes | C | I | I | I |
+| Services / Negócio | C | I | I | I |
+| Validações / Middlewares | C | I | I | I |
+| Documentação Swagger | I | **R** | C | I |
+| Testes Postman | I | C | **R** | I |
+| Deploy | I | I | I | **R** |
 
 **Legenda:**
 * **R (Responsável):** Quem executa a tarefa.

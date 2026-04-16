@@ -19,19 +19,18 @@ O módulo automatiza a comunicação com os participantes, enviando confirmaçõ
 ## 5. Equipe
 | Nome | Função/Responsabilidade |
 |------|------------------------|
-| [Maria Eloisa] | [Pode ser o responsável pelo banco de dados (Models  Migrations).] |
-| [Maria Fernanda] | [Pode focar na documentação técnica e Swagger.] |
-| [Raissa ] | [Pode ser o responsável pelos testes no Postman e qualidade.] |
+| [Maria Eloisa] | [Responsável pelo banco de dados (Models  Migrations).] |
+| [Maria Fernanda] | [Foco na documentação técnica e Swagger.] |
+| [Raissa ] | [Responsável pelos testes no Postman e qualidade.] |
 | [Isadora ] | [Responsável pela Infraestrutura, Configuração de E-mail e Deploy] |
 ## 6. Tecnologias
 Node.js, Express.js, MySQL, Sequelize, Swagger, Nodemailer, Git/GitHub
 ## 7. Prazo
 Início: [02/04/2026 ] | Entrega final: [16/04/2026 ]
 ## 8. Critérios de Sucesso
-- [ ] API funcional com todos os CRUDs
-- [ ] Dados persistidos em MySQL
+- [V] API funcional com todos os CRUDs
+- [V] Dados persistidos em MySQL
 - [ ] Notificações por e-mail funcionando (simulado)
-- [ ] Documentação Swagger completa
-
-- [ ] Deploy realizado
+- [V] Documentação Swagger completa
+- [V] Deploy realizado
 - [ ] Apresentação aprovada
