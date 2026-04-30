@@ -47,3 +47,7 @@ module.exports = {
     atualizar,
     deletar,
 };
+
+
+// Substituiu o uso de um model em memória (EventoModel) pelo Sequelize, passando a acessar o banco de dados real.
+// Conectou o Service ao banco de dados, Tornou funções assíncronas, Implementou Create e Read com Sequelize, Removeu validação manual, Passou a usar validação automática do Sequelize

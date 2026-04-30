@@ -55,3 +55,8 @@ async function destroy(req, res, next) {
 }
 
 module.exports = { index, show, store, update, destroy };
+
+
+
+// Você adaptou o Controller para trabalhar com funções assíncronas (async/await), já que o Service agora usa Sequelize.
+// Transformou o Controller em assíncrono, Passou a usar await, Centralizou tratamento de erro com next, Manteve o Controller simples e organizado

@@ -44,3 +44,8 @@ function errorHandler(err, req, res, next) {
 }
 
 module.exports = errorHandler;
+
+
+
+// Melhorei o errorHandler para reconhecer e tratar automaticamente erros específicos do Sequelize.
+// entende erros do Sequelize, responde com o status correto, envia mensagens mais úteis, facilita debug
