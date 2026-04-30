@@ -1,10 +1,9 @@
-const ParticipanteModel = require("../models/ParticipanteModel");
-const { NotFoundError, ValidationError } = require("../errors/AppError");
+const ParticipanteService = require("../services/ParticipanteService");
 
 // LISTAR TODOS
-function index(req, res, next) {
+async function index(req, res, next) {
     try {
-        const participantes = ParticipanteModel.listar();
+        const participantes = await ParticipanteService.listarTodos();
         res.json(participantes);
     } catch (erro) {
         next(erro);
@@ -12,15 +11,11 @@ function index(req, res, next) {
 }
 
 // BUSCAR POR ID
-function show(req, res, next) {
+async function show(req, res, next) {
     try {
         const id = parseInt(req.params.id);
 
-        const participante = ParticipanteModel.buscarPorId(id);
-
-        if (!participante) {
-            throw new NotFoundError("Participante");
-        }
+        const participante = await ParticipanteService.buscarPorId(id);
 
         res.json(participante);
     } catch (erro) {
@@ -29,21 +24,9 @@ function show(req, res, next) {
 }
 
 // CRIAR
-function store(req, res, next) {
+async function store(req, res, next) {
     try {
-        const { nome, email } = req.body;
-
-        // Validação obrigatória
-        if (!nome || !email) {
-            throw new ValidationError("Nome e email são obrigatórios");
-        }
-
-        // Validação extra
-        if (email && !email.includes("@")) {
-            throw new ValidationError("Email inválido");
-        }
-
-        const novoParticipante = ParticipanteModel.criar({ nome, email });
+        const novoParticipante = await ParticipanteService.criar(req.body);
 
         res.status(201).json(novoParticipante);
     } catch (erro) {
@@ -52,20 +35,14 @@ function store(req, res, next) {
 }
 
 // ATUALIZAR
-function update(req, res, next) {
+async function update(req, res, next) {
     try {
         const id = parseInt(req.params.id);
 
-        const { nome, email } = req.body;
-
-        const participanteAtualizado = ParticipanteModel.atualizar(id, {
-            nome,
-            email
-        });
-
-        if (!participanteAtualizado) {
-            throw new NotFoundError("Participante");
-        }
+        const participanteAtualizado = await ParticipanteService.atualizar(
+            id,
+            req.body
+        );
 
         res.json(participanteAtualizado);
     } catch (erro) {
@@ -74,15 +51,11 @@ function update(req, res, next) {
 }
 
 // DELETAR
-function destroy(req, res, next) {
+async function destroy(req, res, next) {
     try {
         const id = parseInt(req.params.id);
 
-        const deletado = ParticipanteModel.deletar(id);
-
-        if (!deletado) {
-            throw new NotFoundError("Participante");
-        }
+        await ParticipanteService.deletar(id);
 
         res.status(204).send();
     } catch (erro) {
