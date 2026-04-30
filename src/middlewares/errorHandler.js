@@ -1,19 +1,46 @@
 function errorHandler(err, req, res, next) {
-    // Se for um erro nosso (AppError), usamos o statusCode dele
-    const statusCode = err.statusCode || 500;
-    const mensagem = err.message || "Erro interno do servidor";
+    let statusCode = err.statusCode || 500;
+    let mensagem = err.message || "Erro interno do servidor";
+    let tipo = err.name || "Error";
 
-    // Log do erro no console (para o desenvolvedor)
-    console.error(`[ERRO] ${err.name}: ${mensagem}`);
+    //  Erros de validação do Sequelize
+    if (err.name === "SequelizeValidationError") {
+        statusCode = 400;
+        tipo = "ValidationError";
+        mensagem = err.errors.map(e => e.message).join("; ");
+    }
 
-    // Resposta padronizada para o cliente
-    res.status(statusCode).json({
+    //  Erro de campo único duplicado
+    if (err.name === "SequelizeUniqueConstraintError") {
+        statusCode = 409;
+        tipo = "ConflictError";
+        mensagem = "Registro duplicado: " + err.errors.map(e => e.message).join("; ");
+    }
+
+    //  Erro de chave estrangeira (FK)
+    if (err.name === "SequelizeForeignKeyConstraintError") {
+        statusCode = 400;
+        tipo = "ForeignKeyError";
+        mensagem = "Referência inválida: o registro relacionado não existe";
+    }
+
+    // Log do erro no console
+    console.error(`[ERRO] ${tipo}: ${mensagem}`);
+
+    const resposta = {
         erro: {
-            tipo: err.name || "Error",
-            mensagem: mensagem,
-            statusCode: statusCode,
+            tipo,
+            mensagem,
+            statusCode,
         },
-    });
+    };
+
+    // Mostrar stack só em desenvolvimento
+    if (process.env.NODE_ENV === "development") {
+        resposta.erro.stack = err.stack;
+    }
+
+    res.status(statusCode).json(resposta);
 }
 
 module.exports = errorHandler;
