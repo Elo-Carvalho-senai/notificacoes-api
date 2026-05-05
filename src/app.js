@@ -18,33 +18,35 @@ const exportRoutes = require("./routes/exportRoutes");
 
 const app = express();
 
-// Middlewares básicos
+
 app.use(express.json());
 app.use(cors());
 app.use(logger);
 app.use(responseTime);
 
-// Uploads (ESSENCIAL)
-app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-// Swagger
+const uploadsPath = path.resolve(__dirname, "..", "uploads");
+app.use("/uploads", express.static(uploadsPath));
+
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rotas
+
 app.use("/eventos", eventoRoutes);
 app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
 app.use("/exportar", exportRoutes);
 
-// Rota raiz
+
 app.get("/", (req, res) => {
-  res.json({
-    mensagem: "API de Notificações",
+  return res.status(200).json({
+    mensagem: "API de Eventos",
     documentacao: "/api-docs",
+    exemploUpload: "http://localhost:3000/uploads/arquivo.jpg",
   });
 });
 
-// Middlewares de erro
+
 app.use(notFound);
 app.use(errorHandler);
 
