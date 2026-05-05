@@ -2,51 +2,49 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
 const cors = require("cors");
+const path = require("path");
 
-// MIDDLEWARES GLOBAIS
+// MIDDLEWARES
 const logger = require("./middlewares/logger");
 const responseTime = require("./middlewares/responseTime");
 const errorHandler = require("./middlewares/errorHandler");
 const notFound = require("./middlewares/notFound");
-const exportacaoRoutes = require("./routes/exportacaoRoutes");
 
-const app = express();
-
-// Middlewares
-app.use(express.json());
-app.use(cors());
-app.use(logger); // agora certo
-app.use(responseTime);
-app.use("/exportar", exportacaoRoutes);
-
-// Documentação Swagger
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-// Rotas
+// ROTAS
 const eventoRoutes = require("./routes/eventoRoutes");
 const participanteRoutes = require("./routes/participanteRoutes");
 const inscricaoRoutes = require("./routes/inscricaoRoutes");
-const exportRoutes = require('./routes/exportRoutes');
+const exportRoutes = require("./routes/exportRoutes");
 
+const app = express();
+
+// Middlewares básicos
+app.use(express.json());
+app.use(cors());
+app.use(logger);
+app.use(responseTime);
+
+// Uploads (ESSENCIAL)
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+
+// Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Rotas
 app.use("/eventos", eventoRoutes);
 app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
-app.use('/exportar', exportRoutes);
+app.use("/exportar", exportRoutes);
 
 // Rota raiz
 app.get("/", (req, res) => {
-    res.json({
-        mensagem: "API de Notificações",
-        documentacao: "/api-docs",
-        rotas: {
-            eventos: "/eventos",
-            participantes: "/participantes",
-            inscricoes: "/inscricoes",
-        },
-    });
+  res.json({
+    mensagem: "API de Notificações",
+    documentacao: "/api-docs",
+  });
 });
 
-// 👇 SEMPRE POR ÚLTIMO
+// Middlewares de erro
 app.use(notFound);
 app.use(errorHandler);
 
