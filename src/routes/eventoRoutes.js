@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const EventoController = require("../controllers/EventoController");
-
+const upload = require("../config/upload"); 
 /**
  * @swagger
  * components:
@@ -24,6 +24,8 @@ const EventoController = require("../controllers/EventoController");
  *           type: string
  *         capacidade:
  *           type: integer
+ *         banner:
+ *           type: string
  */
 
 /**
@@ -41,11 +43,8 @@ router.get("/", EventoController.index);
  *   get:
  *     summary: Listar eventos futuros
  *     tags: [Eventos]
- *     responses:
- *       200:
- *         description: Lista de eventos com data futura
  */
-router.get("/futuros", EventoController.futuros); // ✅ AQUI
+router.get("/futuros", EventoController.futuros);
 
 /**
  * @swagger
@@ -82,5 +81,51 @@ router.put("/:id", EventoController.update);
  *     tags: [Eventos]
  */
 router.delete("/:id", EventoController.destroy);
+
+
+//  NOVO ENDPOINT DE UPLOAD
+/**
+ * @swagger
+ * /eventos/{id}/banner:
+ *   post:
+ *     summary: Upload de imagem de banner para evento
+ *     tags: [Eventos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               banner:
+ *                 type: string
+ *                 format: binary
+ */
+router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
+  try {
+    const { Evento } = require("../models");
+
+    const evento = await Evento.findByPk(req.params.id);
+
+    if (!evento) {
+      return res.status(404).json({ erro: "Evento não encontrado" });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ erro: "Nenhum arquivo enviado" });
+    }
+
+    await evento.update({
+      banner: `/uploads/${req.file.filename}`,
+    });
+
+    res.json({
+      mensagem: "Banner atualizado com sucesso",
+      banner: `/uploads/${req.file.filename}`,
+    });
+  } catch (erro) {
+    next(erro);
+  }
+});
 
 module.exports = router;

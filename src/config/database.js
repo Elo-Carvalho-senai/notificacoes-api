@@ -1,14 +1,13 @@
-const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: "mysql",
-        logging: process.env.NODE_ENV === "development" ? console.log : false,
-    },
-);
+require('dotenv').config();
 
-module.exports = sequelize;
+module.exports = {
+  development: {
+    username: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || null,
+    database: process.env.DB_NAME || 'notificacoes_db',
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: process.env.DB_PORT || 3306,
+    dialect: 'mysql',
+    logging: false,
+  },
+};
