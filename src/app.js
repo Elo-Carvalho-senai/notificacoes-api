@@ -8,6 +8,7 @@ const logger = require("./middlewares/logger");
 const responseTime = require("./middlewares/responseTime");
 const errorHandler = require("./middlewares/errorHandler");
 const notFound = require("./middlewares/notFound");
+const exportacaoRoutes = require("./routes/exportacaoRoutes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(cors());
 app.use(logger); // agora certo
 app.use(responseTime);
+app.use("/exportar", exportacaoRoutes);
 
 // Documentação Swagger
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
