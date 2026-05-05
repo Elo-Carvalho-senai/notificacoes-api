@@ -14,7 +14,9 @@ const Evento = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: "Nome não pode ser vazio" },
+        notEmpty: {
+          msg: "Nome não pode ser vazio",
+        },
         len: {
           args: [3, 255],
           msg: "Nome deve ter entre 3 e 255 caracteres",
@@ -31,7 +33,9 @@ const Evento = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isDate: { msg: "Data inválida" },
+        isDate: {
+          msg: "Data inválida",
+        },
       },
     },
 
@@ -48,7 +52,9 @@ const Evento = sequelize.define(
           args: [1],
           msg: "Capacidade deve ser pelo menos 1",
         },
-        isInt: { msg: "Capacidade deve ser um número inteiro" },
+        isInt: {
+          msg: "Capacidade deve ser um número inteiro",
+        },
       },
     },
 
@@ -56,11 +62,7 @@ const Evento = sequelize.define(
     banner: {
       type: DataTypes.STRING,
       allowNull: true,
-      validate: {
-        isUrl: {
-          msg: "Banner deve ser uma URL válida",
-        },
-      },
+      defaultValue: null,
     },
   },
   {

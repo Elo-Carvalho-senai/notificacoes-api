@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const EventoController = require("../controllers/EventoController");
 const upload = require("../config/upload");
+const { Evento } = require("../models");
 
 /**
  * @swagger
@@ -29,7 +30,9 @@ const upload = require("../config/upload");
  *           type: string
  */
 
+// =====================
 // ROTAS CRUD
+// =====================
 router.get("/", EventoController.index);
 router.get("/futuros", EventoController.futuros);
 router.get("/:id", EventoController.show);
@@ -54,10 +57,12 @@ router.delete("/:id", EventoController.destroy);
  *                 type: string
  *                 format: binary
  */
+
+// =====================
+// UPLOAD DE BANNER
+// =====================
 router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
   try {
-    const { Evento } = require("../models");
-
     const evento = await Evento.findByPk(req.params.id);
 
     if (!evento) {
