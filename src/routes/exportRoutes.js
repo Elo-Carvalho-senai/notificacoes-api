@@ -81,4 +81,81 @@ router.get('/eventos/json', async (req, res, next) => {
 
 });
 
+// GET /exportar/relatorio/inscricoes — relatório de inscrições por evento
+
+router.get('/relatorio/inscricoes', async (req, res, next) => {
+
+    try {
+
+        const eventos = await Evento.findAll({
+
+            include: [{
+
+                model: Inscricao,
+
+                as: 'inscricoes',
+
+                include: [{
+
+                    model: Participante,
+
+                    as: 'participante',
+
+                    attributes: ['nome', 'email'],
+
+                }],
+
+            }],
+
+            order: [['data', 'ASC']],
+
+        });
+
+        // Formatar o relatório
+
+        const relatorio = eventos.map(evento => ({
+
+            evento: evento.nome,
+
+            data: evento.data,
+
+            capacidade: evento.capacidade,
+
+            totalInscritos: evento.inscricoes.length,
+
+            vagasRestantes: (evento.capacidade || 0) - evento.inscricoes.length,
+
+            inscritos: evento.inscricoes.map(i => ({
+
+                nome: i.participante.nome,
+
+                email: i.participante.email,
+
+                status: i.status,
+
+                dataInscricao: i.dataInscricao,
+
+            })),
+
+        }));
+
+        res.json({
+
+            geradoEm: new Date().toISOString(),
+
+            totalEventos: relatorio.length,
+
+            relatorio,
+
+        });
+
+    } catch (erro) {
+
+        next(erro);
+
+    }
+
+});
+
+
 module.exports = router;
