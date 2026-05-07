@@ -1,5 +1,6 @@
 // src/controllers/EventoController.js
 const EventoService = require('../services/EventoService');
+const cache = require('../config/cache');
 
 async function index(req, res, next) {
   try {
@@ -32,6 +33,9 @@ async function show(req, res, next) {
 async function store(req, res, next) {
   try {
     const novoEvento = await EventoService.criar(req.body);
+
+    cache.flushAll();
+
     res.status(201).json(novoEvento);
   } catch (erro) {
     next(erro);
@@ -40,8 +44,13 @@ async function store(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const id = parseInt(req.params.id);
-    const eventoAtualizado = await EventoService.atualizar(id, req.body);
+    const eventoAtualizado = await EventoService.atualizar(
+      req.params.id,
+      req.body
+    );
+
+    cache.flushAll();
+
     res.json(eventoAtualizado);
   } catch (erro) {
     next(erro);
@@ -50,8 +59,10 @@ async function update(req, res, next) {
 
 async function destroy(req, res, next) {
   try {
-    const id = parseInt(req.params.id);
-    await EventoService.deletar(id);
+    await EventoService.deletar(req.params.id);
+
+    cache.flushAll();
+
     res.status(204).send();
   } catch (erro) {
     next(erro);
