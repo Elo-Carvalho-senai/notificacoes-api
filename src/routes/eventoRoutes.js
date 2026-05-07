@@ -3,7 +3,7 @@ const router = express.Router();
 const EventoController = require("../controllers/EventoController");
 const upload = require("../config/upload");
 const { Evento } = require("../models");
-const cacheMiddleware = require('../middlewares/cacheMiddleware');
+const cacheMiddleware = require("../middlewares/cacheMiddleware");
 
 /**
  * @swagger
@@ -34,21 +34,27 @@ const cacheMiddleware = require('../middlewares/cacheMiddleware');
 // =====================
 // ROTAS CRUD
 // =====================
-router.get('/', cacheMiddleware(30), EventoController.index);
-router.get("/futuros", EventoController.futuros);
-router.get('/:id', cacheMiddleware(60), EventoController.show);
 
+router.get("/", cacheMiddleware(30), EventoController.index);
+router.get("/futuros", EventoController.futuros);
+router.get("/:id", cacheMiddleware(60), EventoController.show);
 router.post("/", EventoController.store);
 router.put("/:id", EventoController.update);
 router.delete("/:id", EventoController.destroy);
-
 
 /**
  * @swagger
  * /eventos/{id}/banner:
  *   post:
- *     summary: Upload de imagem de banner para evento
+ *     summary: Upload de banner do evento
  *     tags: [Eventos]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do evento
  *     requestBody:
  *       required: true
  *       content:
@@ -59,11 +65,17 @@ router.delete("/:id", EventoController.destroy);
  *               banner:
  *                 type: string
  *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Banner enviado com sucesso
+ *       404:
+ *         description: Evento não encontrado
  */
 
 // =====================
 // UPLOAD DE BANNER
 // =====================
+
 router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
   try {
     const evento = await Evento.findByPk(req.params.id);
