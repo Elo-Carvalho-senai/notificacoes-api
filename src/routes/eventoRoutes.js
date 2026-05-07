@@ -34,14 +34,13 @@ const cacheMiddleware = require('../middlewares/cacheMiddleware');
 // =====================
 // ROTAS CRUD
 // =====================
-router.get("/", EventoController.index);
+router.get('/', cacheMiddleware(30), EventoController.index);
 router.get("/futuros", EventoController.futuros);
-router.get("/:id", EventoController.show);
+router.get('/:id', cacheMiddleware(60), EventoController.show);
+
 router.post("/", EventoController.store);
 router.put("/:id", EventoController.update);
 router.delete("/:id", EventoController.destroy);
-router.get('/', cacheMiddleware(30), EventoController.index);
-router.get('/:id', cacheMiddleware(60), EventoController.show);
 
 
 /**
