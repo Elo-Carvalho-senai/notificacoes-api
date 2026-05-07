@@ -15,6 +15,7 @@ const eventoRoutes = require("./routes/eventoRoutes");
 const participanteRoutes = require("./routes/participanteRoutes");
 const inscricaoRoutes = require("./routes/inscricaoRoutes");
 const exportRoutes = require("./routes/exportRoutes");
+const exportacaoRoutes = require("./routes/exportacaoRoutes");
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/eventos", eventoRoutes);
 app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
 app.use("/exportar", exportRoutes);
+app.use("/exportar", exportacaoRoutes);
 
 
 app.get("/", (req, res) => {

@@ -31,7 +31,7 @@ router.get('/relatorio/inscricoes/csv', async (req, res, next) => {
              `${i.participante.nome},` +
              `${i.participante.email},` +
              `${i.status},` +
-             `${i.data_inscricao}\n`;
+             `${i.dataInscricao}\n`;
 
     });
 
