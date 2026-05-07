@@ -3,6 +3,7 @@ const router = express.Router();
 const EventoController = require("../controllers/EventoController");
 const upload = require("../config/upload");
 const { Evento } = require("../models");
+const cacheMiddleware = require('../middlewares/cacheMiddleware');
 
 /**
  * @swagger
@@ -39,6 +40,9 @@ router.get("/:id", EventoController.show);
 router.post("/", EventoController.store);
 router.put("/:id", EventoController.update);
 router.delete("/:id", EventoController.destroy);
+router.get('/', cacheMiddleware(30), EventoController.index);
+router.get('/:id', cacheMiddleware(60), EventoController.show);
+
 
 /**
  * @swagger
