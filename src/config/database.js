@@ -1,13 +1,26 @@
-require('dotenv').config();
+const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
-module.exports = {
-  development: {
-    username: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || null,
-    database: process.env.DB_NAME || 'notificacoes_db',
-    host: process.env.DB_HOST || '127.0.0.1',
+const sequelize = new Sequelize(
+  process.env.DB_NAME || "notificacoes_db",
+  process.env.DB_USER || "root",
+  process.env.DB_PASSWORD || null,
+  {
+    host: process.env.DB_HOST || "127.0.0.1",
     port: process.env.DB_PORT || 3306,
-    dialect: 'mysql',
+    dialect: "mysql",
     logging: false,
-  },
-};
+  }
+);
+
+// (opcional, mas ótimo pra debug)
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("✅ Conectado ao banco com sucesso");
+  })
+  .catch((err) => {
+    console.error("❌ Erro ao conectar no banco:", err.message);
+  });
+
+module.exports = sequelize;

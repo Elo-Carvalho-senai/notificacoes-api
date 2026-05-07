@@ -9,38 +9,60 @@ const Evento = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: { msg: "Nome não pode ser vazio" },
-        len: { args: [3, 255], msg: "Nome deve ter entre 3 e 255 caracteres" },
+        notEmpty: {
+          msg: "Nome não pode ser vazio",
+        },
+        len: {
+          args: [3, 255],
+          msg: "Nome deve ter entre 3 e 255 caracteres",
+        },
       },
     },
+
     descricao: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+
     data: {
       type: DataTypes.DATE,
       allowNull: false,
+      validate: {
+        isDate: {
+          msg: "Data inválida",
+        },
+      },
     },
+
     local: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+
     capacidade: {
       type: DataTypes.INTEGER,
       allowNull: true,
       validate: {
-        min: { args: [1], msg: "Capacidade deve ser pelo menos 1" },
+        min: {
+          args: [1],
+          msg: "Capacidade deve ser pelo menos 1",
+        },
+        isInt: {
+          msg: "Capacidade deve ser um número inteiro",
+        },
       },
     },
 
-    // 🔥 NOVO CAMPO (IMPORTANTE)
+    // CAMPO DE BANNER (UPLOAD)
     banner: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: null,
     },
   },
   {

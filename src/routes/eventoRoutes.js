@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const EventoController = require("../controllers/EventoController");
-const upload = require("../config/upload"); 
+const upload = require("../config/upload");
+const { Evento } = require("../models");
+
 /**
  * @swagger
  * components:
@@ -28,62 +30,16 @@ const upload = require("../config/upload");
  *           type: string
  */
 
-/**
- * @swagger
- * /eventos:
- *   get:
- *     summary: Listar todos os eventos
- *     tags: [Eventos]
- */
+// =====================
+// ROTAS CRUD
+// =====================
 router.get("/", EventoController.index);
-
-/**
- * @swagger
- * /eventos/futuros:
- *   get:
- *     summary: Listar eventos futuros
- *     tags: [Eventos]
- */
 router.get("/futuros", EventoController.futuros);
-
-/**
- * @swagger
- * /eventos/{id}:
- *   get:
- *     summary: Buscar evento por ID
- *     tags: [Eventos]
- */
 router.get("/:id", EventoController.show);
-
-/**
- * @swagger
- * /eventos:
- *   post:
- *     summary: Criar um novo evento
- *     tags: [Eventos]
- */
 router.post("/", EventoController.store);
-
-/**
- * @swagger
- * /eventos/{id}:
- *   put:
- *     summary: Atualizar um evento
- *     tags: [Eventos]
- */
 router.put("/:id", EventoController.update);
-
-/**
- * @swagger
- * /eventos/{id}:
- *   delete:
- *     summary: Deletar um evento
- *     tags: [Eventos]
- */
 router.delete("/:id", EventoController.destroy);
 
-
-//  NOVO ENDPOINT DE UPLOAD
 /**
  * @swagger
  * /eventos/{id}/banner:
@@ -101,10 +57,12 @@ router.delete("/:id", EventoController.destroy);
  *                 type: string
  *                 format: binary
  */
+
+// =====================
+// UPLOAD DE BANNER
+// =====================
 router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
   try {
-    const { Evento } = require("../models");
-
     const evento = await Evento.findByPk(req.params.id);
 
     if (!evento) {
@@ -115,16 +73,19 @@ router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
       return res.status(400).json({ erro: "Nenhum arquivo enviado" });
     }
 
+    const caminhoBanner = `/uploads/${req.file.filename}`;
+
     await evento.update({
-      banner: `/uploads/${req.file.filename}`,
+      banner: caminhoBanner,
     });
 
-    res.json({
+    return res.status(200).json({
       mensagem: "Banner atualizado com sucesso",
-      banner: `/uploads/${req.file.filename}`,
+      banner: caminhoBanner,
     });
+
   } catch (erro) {
-    next(erro);
+    return next(erro);
   }
 });
 
