@@ -240,8 +240,9 @@ notificacoes-api/
 ## 👨‍💻 Integrantes do Grupo
 
 - Eloá Carvalho
-- Integrante 2
-- Integrante 3
+- Raissa
+- Maria Fernanda
+- Isadora
 
 ---
 
