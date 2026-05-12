@@ -239,7 +239,7 @@ notificacoes-api/
 
 ## 👨‍💻 Integrantes do Grupo
 
-- Eloá Carvalho
+- Elo Carvalho
 - Raissa
 - Maria Fernanda
 - Isadora
