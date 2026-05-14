@@ -20,12 +20,12 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
 
     // Criar a notificação no banco
     const notificacao = await Notificacao.create({
-      inscricao_id: inscricao.id,
-      tipo: 'confirmacao',
-      destinatario_email: participante.email,
-      assunto: `Inscrição confirmada: ${evento.nome}`,
-      conteudo: `Olá ${participante.nome}! Sua inscrição no evento "${evento.nome}" foi confirmada.`,
-      enviada: false,
+        inscricao_id: inscricao.id,
+        tipo: 'confirmacao',
+        destinatarioEmail: participante.email,
+        assunto: `Inscrição confirmada: ${evento.nome}`,
+        conteudo: `Olá ${participante.nome}! Sua inscrição no evento "${evento.nome}" foi confirmada.`,
+        enviada: false,
     });
 
     console.log(`[OBSERVER] Notificação #${notificacao.id} criada para ${participante.email}`);
