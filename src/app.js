@@ -4,6 +4,10 @@ const swaggerSpec = require("./swagger");
 const cors = require("cors");
 const path = require("path");
 
+// PASSO 3: REGISTRAR OBSERVERS 
+require("./events/notificacaoObserver");
+
+
 // MIDDLEWARES
 const logger = require("./middlewares/logger");
 const responseTime = require("./middlewares/responseTime");
@@ -16,29 +20,26 @@ const participanteRoutes = require("./routes/participanteRoutes");
 const inscricaoRoutes = require("./routes/inscricaoRoutes");
 const exportRoutes = require("./routes/exportRoutes");
 const exportacaoRoutes = require("./routes/exportacaoRoutes");
+const notificacaoRoutes = require("./routes/notificacaoRoutes"); // Importando a nova rota
 
 const app = express();
-
 
 app.use(express.json());
 app.use(cors());
 app.use(logger);
 app.use(responseTime);
 
-
 const uploadsPath = path.resolve(__dirname, "..", "uploads");
 app.use("/uploads", express.static(uploadsPath));
 
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 
 app.use("/eventos", eventoRoutes);
 app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
 app.use("/exportar", exportRoutes);
 app.use("/exportar", exportacaoRoutes);
-
+app.use("/notificacoes", notificacaoRoutes); // Registrando a nova rota
 
 app.get("/", (req, res) => {
   return res.status(200).json({
@@ -47,7 +48,6 @@ app.get("/", (req, res) => {
     exemploUpload: "http://localhost:3000/uploads/arquivo.jpg",
   });
 });
-
 
 app.use(notFound);
 app.use(errorHandler);
