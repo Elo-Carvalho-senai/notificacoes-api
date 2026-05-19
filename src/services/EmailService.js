@@ -55,7 +55,7 @@ async function enviar(para, assunto, html) {
 
   return {
     messageId: info.messageId,
-    previewUrl,
+    previewUrl: 'https://ethereal.email/message/teste'
   };
 }
 
