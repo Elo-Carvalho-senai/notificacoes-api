@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
+
 const Notificacao = sequelize.define(
     "Notificacao",
     {
@@ -8,31 +9,44 @@ const Notificacao = sequelize.define(
             primaryKey: true,
             autoIncrement: true,
         },
+
+        inscricao_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+
         tipo: {
             type: DataTypes.ENUM("confirmacao", "lembrete"),
             allowNull: false,
         },
+
         destinatarioEmail: {
             type: DataTypes.STRING,
             allowNull: false,
             field: "destinatario_email",
             validate: {
-                isEmail: { msg: "E-mail do destinatário inválido" },
+                isEmail: {
+                    msg: "E-mail do destinatário inválido",
+                },
             },
         },
+
         assunto: {
             type: DataTypes.STRING,
             allowNull: false,
         },
+
         conteudo: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
+
         dataEnvio: {
             type: DataTypes.DATE,
             allowNull: true,
             field: "data_envio",
         },
+
         enviada: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
@@ -43,7 +57,7 @@ const Notificacao = sequelize.define(
         tableName: "notificacoes",
         timestamps: true,
         underscored: true,
-    },
+    }
 );
 
 module.exports = Notificacao;
