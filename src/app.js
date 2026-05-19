@@ -1,55 +1,70 @@
-const express = require("express");
-const swaggerUi = require("swagger-ui-express");
-const swaggerSpec = require("./swagger");
-const cors = require("cors");
-const path = require("path");
+require('dotenv').config();
 
-// PASSO 3: REGISTRAR OBSERVERS 
-require("./events/notificacaoObserver");
-
-
-// MIDDLEWARES
-const logger = require("./middlewares/logger");
-const responseTime = require("./middlewares/responseTime");
-const errorHandler = require("./middlewares/errorHandler");
-const notFound = require("./middlewares/notFound");
-
-// ROTAS
-const eventoRoutes = require("./routes/eventoRoutes");
-const participanteRoutes = require("./routes/participanteRoutes");
-const inscricaoRoutes = require("./routes/inscricaoRoutes");
-const exportRoutes = require("./routes/exportRoutes");
-const exportacaoRoutes = require("./routes/exportacaoRoutes");
-const notificacaoRoutes = require("./routes/notificacaoRoutes");
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
-app.use(express.json());
+// ─────────────────────────────────────────────
+// IMPORTAÇÃO DOS OBSERVERS
+// ─────────────────────────────────────────────
+
+require('./events/notificacaoObserver');
+require('./events/logObserver');
+require('./events/eventoObserver');
+
+// ─────────────────────────────────────────────
+// IMPORTAÇÃO DAS ROTAS
+// ─────────────────────────────────────────────
+
+const eventoRoutes = require('./routes/eventoRoutes');
+const participanteRoutes = require('./routes/participanteRoutes');
+const inscricaoRoutes = require('./routes/inscricaoRoutes');
+const notificacaoRoutes = require('./routes/notificacaoRoutes');
+
+// ─────────────────────────────────────────────
+// IMPORTAÇÃO DO MIDDLEWARE DE ERRO
+// ─────────────────────────────────────────────
+
+const errorHandler = require('./middlewares/errorHandler');
+
+// ─────────────────────────────────────────────
+// MIDDLEWARES
+// ─────────────────────────────────────────────
+
 app.use(cors());
-app.use(logger);
-app.use(responseTime);
 
-const uploadsPath = path.resolve(__dirname, "..", "uploads");
-app.use("/uploads", express.static(uploadsPath));
+app.use(express.json());
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// ─────────────────────────────────────────────
+// ROTAS
+// ─────────────────────────────────────────────
 
-app.use("/eventos", eventoRoutes);
-app.use("/participantes", participanteRoutes);
-app.use("/inscricoes", inscricaoRoutes);
-app.use("/exportar", exportRoutes);
-app.use("/exportar", exportacaoRoutes);
-app.use("/notificacoes", notificacaoRoutes); 
+app.use('/eventos', eventoRoutes);
 
-app.get("/", (req, res) => {
-  return res.status(200).json({
-    mensagem: "API de Eventos",
-    documentacao: "/api-docs",
-    exemploUpload: "http://localhost:3000/uploads/arquivo.jpg",
-  });
+app.use('/participantes', participanteRoutes);
+
+app.use('/inscricoes', inscricaoRoutes);
+
+app.use('/notificacoes', notificacaoRoutes);
+
+// ─────────────────────────────────────────────
+// ROTA TESTE
+// ─────────────────────────────────────────────
+
+app.get('/', (req, res) => {
+
+    res.json({
+        mensagem: 'API funcionando 🚀',
+    });
+
 });
 
-app.use(notFound);
+// ─────────────────────────────────────────────
+// MIDDLEWARE DE ERRO
+// ─────────────────────────────────────────────
+
 app.use(errorHandler);
 
 module.exports = app;
+
