@@ -1,6 +1,7 @@
 const { Evento } = require("../models");
 const { NotFoundError, ValidationError } = require("../errors/AppError");
 const { Op } = require("sequelize"); // ✅ melhor importar uma vez só
+const appEmitter = require('../events/eventEmitter');
 
 async function listarTodos(opcoes = {}) {
   const {
@@ -57,15 +58,31 @@ async function buscarPorId(id) {
 }
 
 async function criar(dados) {
+
   try {
-    return await Evento.create(dados);
+
+    const novoEvento = await Evento.create(dados);
+
+    // Emitir evento
+    appEmitter.emit('evento:criado', novoEvento);
+
+    return novoEvento;
+
   } catch (erro) {
+
     if (erro.name === "SequelizeValidationError") {
-      const mensagens = erro.errors.map(e => e.message).join("; ");
+
+      const mensagens =
+        erro.errors.map(e => e.message).join("; ");
+
       throw new ValidationError(mensagens);
+
     }
+
     throw erro;
+
   }
+
 }
 
 async function atualizar(id, dados) {
