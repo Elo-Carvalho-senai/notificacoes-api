@@ -1,50 +1,152 @@
 // src/services/ParticipanteService.js
 
 const { Participante } = require('../models');
-const { NotFoundError, ValidationError } = require('../errors/AppError');
+
+const {
+  NotFoundError,
+  ValidationError
+} = require('../errors/AppError');
+
+const appEmitter = require('../events/eventEmitter');
+
+// ─────────────────────────────────────────────
+// LISTAR TODOS
+// ─────────────────────────────────────────────
 
 async function listarTodos() {
+
   const participantes = await Participante.findAll({
     order: [['nome', 'ASC']],
   });
 
   return participantes;
+
 }
 
+// ─────────────────────────────────────────────
+// BUSCAR POR ID
+// ─────────────────────────────────────────────
+
 async function buscarPorId(id) {
-  const participante = await Participante.findByPk(id);
+
+  const participante =
+    await Participante.findByPk(id);
 
   if (!participante) {
+
     throw new NotFoundError('Participante');
+
   }
 
   return participante;
+
 }
 
+// ─────────────────────────────────────────────
+// CRIAR
+// ─────────────────────────────────────────────
+
 async function criar(dados) {
+
   try {
-    const novoParticipante = await Participante.create(dados);
+
+    const novoParticipante =
+      await Participante.create(dados);
+
+    // Emitir evento
+    appEmitter.emit(
+      'participante:criado',
+      novoParticipante
+    );
+
+    console.log(
+      'EVENTO participante:criado emitido'
+    );
 
     return novoParticipante;
 
   } catch (erro) {
 
-    if (erro.name === 'SequelizeValidationError') {
-      const mensagens = erro.errors.map(e => e.message).join('; ');
+    if (
+      erro.name === 'SequelizeValidationError'
+    ) {
+
+      const mensagens =
+        erro.errors
+          .map(e => e.message)
+          .join('; ');
+
       throw new ValidationError(mensagens);
+
     }
 
     throw erro;
+
   }
+
 }
 
-// Próxima aula
+// ─────────────────────────────────────────────
+// ATUALIZAR
+// ─────────────────────────────────────────────
+
 async function atualizar(id, dados) {
-  // TODO
+
+  const participante =
+    await Participante.findByPk(id);
+
+  if (!participante) {
+
+    throw new NotFoundError('Participante');
+
+  }
+
+  try {
+
+    await participante.update(dados);
+
+    return participante;
+
+  } catch (erro) {
+
+    if (
+      erro.name === 'SequelizeValidationError'
+    ) {
+
+      const mensagens =
+        erro.errors
+          .map(e => e.message)
+          .join('; ');
+
+      throw new ValidationError(mensagens);
+
+    }
+
+    throw erro;
+
+  }
+
 }
+
+// ─────────────────────────────────────────────
+// DELETAR
+// ─────────────────────────────────────────────
 
 async function deletar(id) {
-  // TODO
+
+  const participante =
+    await Participante.findByPk(id);
+
+  if (!participante) {
+
+    throw new NotFoundError('Participante');
+
+  }
+
+  await participante.destroy();
+
+  return true;
+
 }
 
 module.exports = {
@@ -52,5 +154,5 @@ module.exports = {
   buscarPorId,
   criar,
   atualizar,
-  deletar
+  deletar,
 };

@@ -12,7 +12,7 @@ const app = express();
 require('./events/notificacaoObserver');
 require('./events/logObserver');
 require('./events/eventoObserver');
-
+require('./events/boasVindasObserver');
 // ─────────────────────────────────────────────
 // IMPORTAÇÃO DAS ROTAS
 // ─────────────────────────────────────────────
