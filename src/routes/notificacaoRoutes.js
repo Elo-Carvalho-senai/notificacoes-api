@@ -8,6 +8,9 @@ const {
   Participante
 } = require('../models');
 
+const EmailService = require('../services/EmailService');
+
+// GET /notificacoes
 router.get('/', async (req, res, next) => {
   try {
 
@@ -32,6 +35,26 @@ router.get('/', async (req, res, next) => {
     });
 
     res.json(notificacoes);
+
+  } catch (erro) {
+    next(erro);
+  }
+});
+
+// POST /notificacoes/teste-email
+router.post('/teste-email', async (req, res, next) => {
+  try {
+
+    const resultado = await EmailService.enviar(
+      'teste@exemplo.com',
+      'Teste da API de Notificações',
+      '<h1>Funcionou! 🎉</h1><p>Este e-mail foi enviado pela nossa API.</p>'
+    );
+
+    res.json({
+      mensagem: 'E-mail de teste enviado!',
+      previewUrl: resultado.previewUrl,
+    });
 
   } catch (erro) {
     next(erro);
