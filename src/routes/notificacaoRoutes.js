@@ -42,23 +42,36 @@ router.get('/', async (req, res, next) => {
 });
 
 // POST /notificacoes/teste-email
-router.post('/teste-email', async (req, res, next) => {
+router.post('/teste-email', async (req, res) => {
+
   try {
+
+    console.log('INICIOU ENVIO');
 
     const resultado = await EmailService.enviar(
       'teste@exemplo.com',
-      'Teste da API de Notificações',
-      '<h1>Funcionou! 🎉</h1><p>Este e-mail foi enviado pela nossa API.</p>'
+      'Teste da API',
+      '<h1>Funcionou!</h1>'
     );
 
-    res.json({
-      mensagem: 'E-mail de teste enviado!',
+    console.log('EMAIL ENVIADO');
+
+    return res.json({
+      mensagem: 'E-mail enviado!',
       previewUrl: resultado.previewUrl,
     });
 
   } catch (erro) {
-    next(erro);
+
+    console.log('ERRO NO EMAIL');
+    console.log(erro);
+
+    return res.status(500).json({
+      erro: erro.message
+    });
+
   }
+
 });
 
 module.exports = router;
