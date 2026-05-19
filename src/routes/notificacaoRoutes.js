@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { Notificacao, Inscricao, Evento, Participante } = require('../models');
+const {
+  Notificacao,
+  Inscricao,
+  Evento,
+  Participante
+} = require('../models');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -20,10 +25,10 @@ router.get('/', async (req, res, next) => {
             model: Participante,
             as: 'participante',
             attributes: ['nome', 'email']
-          }
-        ]
+          },
+        ],
       }],
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
     });
 
     res.json(notificacoes);

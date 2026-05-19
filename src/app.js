@@ -20,7 +20,7 @@ const participanteRoutes = require("./routes/participanteRoutes");
 const inscricaoRoutes = require("./routes/inscricaoRoutes");
 const exportRoutes = require("./routes/exportRoutes");
 const exportacaoRoutes = require("./routes/exportacaoRoutes");
-const notificacaoRoutes = require("./routes/notificacaoRoutes"); // Importando a nova rota
+const notificacaoRoutes = require("./routes/notificacaoRoutes");
 
 const app = express();
 
@@ -39,7 +39,7 @@ app.use("/participantes", participanteRoutes);
 app.use("/inscricoes", inscricaoRoutes);
 app.use("/exportar", exportRoutes);
 app.use("/exportar", exportacaoRoutes);
-app.use("/notificacoes", notificacaoRoutes); // Registrando a nova rota
+app.use("/notificacoes", notificacaoRoutes); 
 
 app.get("/", (req, res) => {
   return res.status(200).json({
