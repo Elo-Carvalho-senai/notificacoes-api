@@ -1,41 +1,45 @@
 const sequelize = require("../config/database");
+
 const Evento = require("./EventoModel");
 const Participante = require("./ParticipanteModel");
 const Inscricao = require("./InscricaoModel");
 const Notificacao = require("./NotificacaoModel");
 
-// ── Relacionamentos ──
+// ─────────────────────────────────────────────
+// RELACIONAMENTOS
+// ─────────────────────────────────────────────
 
-// Um Evento tem muitas Inscrições
-Evento.hasMany(Inscricao, { foreignKey: "evento_id", as: "inscricoes" });
-Inscricao.belongsTo(Evento, { foreignKey: "evento_id", as: "evento" });
+// Evento → Inscrições
+Evento.hasMany(Inscricao, {
+    foreignKey: "evento_id",
+    as: "inscricoes",
+});
 
-// Um Participante tem muitas Inscrições
+Inscricao.belongsTo(Evento, {
+    foreignKey: "evento_id",
+    as: "evento",
+});
+
+// Participante → Inscrições
 Participante.hasMany(Inscricao, {
     foreignKey: "participante_id",
     as: "inscricoes",
 });
+
 Inscricao.belongsTo(Participante, {
     foreignKey: "participante_id",
     as: "participante",
 });
 
-// Uma Inscrição tem muitas Notificações
+// Inscrição → Notificações
 Inscricao.hasMany(Notificacao, {
     foreignKey: "inscricao_id",
     as: "notificacoes",
 });
+
 Notificacao.belongsTo(Inscricao, {
     foreignKey: "inscricao_id",
     as: "inscricao",
-});
-
-Inscricao.belongsTo(Evento, {
-  foreignKey: "evento_id"
-});
-
-Inscricao.belongsTo(Participante, {
-  foreignKey: "participante_id"
 });
 
 module.exports = {
