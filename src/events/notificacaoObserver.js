@@ -1,18 +1,35 @@
 // src/events/notificacaoObserver.js
+
 const appEmitter = require('./eventEmitter');
-const { Notificacao, Participante, Evento, Inscricao } = require('../models');
+
+const {
+  Notificacao,
+  Participante,
+  Evento,
+  Inscricao
+} = require('../models');
+
 const EmailService = require('../services/EmailService');
 
-// 1. IMPORTANDO OS TEMPLATES EXIGIDOS PELA ATIVIDADE
+// Templates
 const confirmacaoInscricao = require('../templates/email/confirmacaoInscricao');
 const cancelamentoInscricao = require('../templates/email/cancelamentoInscricao');
 
-// 2. REFACTOR: Funções auxiliares (Helpers) para limpar o código
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+
 async function buscarDadosInscricao(inscricaoId) {
   return await Inscricao.findByPk(inscricaoId, {
     include: [
-      { model: Evento, as: 'evento' },
-      { model: Participante, as: 'participante' },
+      {
+        model: Evento,
+        as: 'evento',
+      },
+      {
+        model: Participante,
+        as: 'participante',
+      },
     ],
   });
 }
@@ -21,78 +38,172 @@ async function salvarNotificacao(dados) {
   return await Notificacao.create(dados);
 }
 
-// ── OBSERVER: Inscrição criada ──
+// ─────────────────────────────────────────────
+// OBSERVER → INSCRIÇÃO CRIADA
+// ─────────────────────────────────────────────
+
 appEmitter.on('inscricao:criada', async (inscricao) => {
+
   try {
-    console.log(`[OBSERVER] Nova inscrição detectada: #${inscricao.id}`);
 
-    // Usa o helper criado acima
-    const dados = await buscarDadosInscricao(inscricao.id);
-    if (!dados) return;
+    console.log(
+      `[OBSERVER] Nova inscrição detectada: #${inscricao.id}`
+    );
 
-    const { evento, participante } = dados;
-    const assunto = `Inscrição confirmada: ${evento.nome}`;
+    const dados = await buscarDadosInscricao(
+      inscricao.id
+    );
 
-    // Usa o template importado passando as variáveis necessárias
-    const html = confirmacaoInscricao({
-      participanteNome: participante.nome,
-      eventoNome: evento.nome,
-      eventoData: evento.data,
-      eventoLocal: evento.local,
-    });
+    if (!dados) {
+      console.log('⚠️ Inscrição não encontrada');
+      return;
+    }
 
-    const resultado = await EmailService.enviar(participante.email, assunto, html);
+    const evento = dados.evento;
+    const participante = dados.participante;
 
-    // Salva usando o helper
+    // Verificações de segurança
+    if (!evento) {
+      console.log('⚠️ Evento não encontrado');
+      return;
+    }
+
+    if (!participante) {
+      console.log('⚠️ Participante não encontrado');
+      return;
+    }
+
+    const assunto =
+      `Inscrição confirmada: ${evento.nome}`;
+
+    // Template HTML
+    const html = confirmacaoInscricao(
+      participante,
+      evento
+    );
+
+    // Enviar e-mail
+    const resultado = await EmailService.enviar(
+      participante.email,
+      assunto,
+      html
+    );
+
+    // Salvar notificação
     await salvarNotificacao({
       inscricao_id: inscricao.id,
       tipo: 'confirmacao',
-      destinatario_email: participante.email,
+      destinatarioEmail: participante.email,
       assunto,
       conteudo: html,
-      data_envio: new Date(),
+      dataEnvio: new Date(),
       enviada: true,
     });
 
-    console.log(`[NOTIFICAÇÃO] Confirmação enviada para ${participante.email}`);
-    if (resultado?.visualizarEm) console.log(`   Visualizar em: ${resultado.visualizarEm}`);
+    console.log(
+      `[NOTIFICAÇÃO] Confirmação enviada para ${participante.email}`
+    );
+
+    if (resultado?.visualizarEm) {
+
+      console.log(
+        `🔗 Visualizar em: ${resultado.visualizarEm}`
+      );
+
+    }
+
   } catch (erro) {
-    console.error('[NOTIFICAÇÃO] Erro:', erro.message);
+
+    console.error(
+      '[NOTIFICAÇÃO] Erro:',
+      erro.message
+    );
+
   }
+
 });
 
-// ── OBSERVER: Inscrição cancelada (ADICIONADO) ──
+// ─────────────────────────────────────────────
+// OBSERVER → INSCRIÇÃO CANCELADA
+// ─────────────────────────────────────────────
+
 appEmitter.on('inscricao:cancelada', async (inscricao) => {
+
   try {
-    console.log(`[OBSERVER] Inscrição cancelada detectada: #${inscricao.id}`);
 
-    const dados = await buscarDadosInscricao(inscricao.id);
-    if (!dados) return;
+    console.log(
+      `[OBSERVER] Inscrição cancelada detectada: #${inscricao.id}`
+    );
 
-    const { evento, participante } = dados;
-    const assunto = `Inscrição cancelada: ${evento.nome}`;
+    const dados = await buscarDadosInscricao(
+      inscricao.id
+    );
 
-    // Usa o template de cancelamento
-    const html = cancelamentoInscricao({
-      participanteNome: participante.nome,
-      eventoNome: evento.nome,
-    });
+    if (!dados) {
+      console.log('⚠️ Inscrição não encontrada');
+      return;
+    }
 
-    const resultado = await EmailService.enviar(participante.email, assunto, html);
+    const evento = dados.evento;
+    const participante = dados.participante;
 
+    // Verificações de segurança
+    if (!evento) {
+      console.log('⚠️ Evento não encontrado');
+      return;
+    }
+
+    if (!participante) {
+      console.log('⚠️ Participante não encontrado');
+      return;
+    }
+
+    const assunto =
+      `Inscrição cancelada: ${evento.nome}`;
+
+    // Template HTML
+    const html = cancelamentoInscricao(
+      participante,
+      evento
+    );
+
+    // Enviar e-mail
+    const resultado = await EmailService.enviar(
+      participante.email,
+      assunto,
+      html
+    );
+
+    // Salvar notificação
     await salvarNotificacao({
       inscricao_id: inscricao.id,
-      tipo: 'cancelamento', // Corrigido aqui para salvar como cancelamento!
-      destinatario_email: participante.email,
+      tipo: 'cancelamento',
+      destinatarioEmail: participante.email,
       assunto,
       conteudo: html,
-      data_envio: new Date(),
+      dataEnvio: new Date(),
       enviada: true,
     });
 
-    console.log(`[NOTIFICAÇÃO] Cancelamento enviado para ${participante.email}`);
-    if (resultado?.visualizarEm) console.log(`   Visualizar em: ${resultado.visualizarEm}`);
+    console.log(
+      `[NOTIFICAÇÃO] Cancelamento enviado para ${participante.email}`
+    );
+
+    if (resultado?.visualizarEm) {
+
+      console.log(
+        `🔗 Visualizar em: ${resultado.visualizarEm}`
+      );
+
+    }
+
   } catch (erro) {
-    console.error('[NOTIFICAÇÃO] Erro:', erro.message);
+
+    console.error(
+      '[NOTIFICAÇÃO] Erro:',
+      erro.message
+    );
+
   }
+
 });

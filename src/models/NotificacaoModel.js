@@ -1,63 +1,72 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+// src/models/Notificacao.js
+
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
 const Notificacao = sequelize.define(
-    "Notificacao",
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
+  'Notificacao',
+  {
 
-        inscricao_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-
-        tipo: {
-            type: DataTypes.ENUM("confirmacao", "lembrete"),
-            allowNull: false,
-        },
-
-        destinatarioEmail: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: "destinatario_email",
-            validate: {
-                isEmail: {
-                    msg: "E-mail do destinatário inválido",
-                },
-            },
-        },
-
-        assunto: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-
-        conteudo: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
-
-        dataEnvio: {
-            type: DataTypes.DATE,
-            allowNull: true,
-            field: "data_envio",
-        },
-
-        enviada: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false,
-        },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    {
-        tableName: "notificacoes",
-        timestamps: true,
-        underscored: true,
-    }
+
+    inscricao_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    tipo: {
+      type: DataTypes.ENUM(
+        'confirmacao',
+        'cancelamento',
+        'lembrete'
+      ),
+      allowNull: false,
+    },
+
+    destinatarioEmail: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: 'destinatario_email',
+
+      validate: {
+        isEmail: {
+          msg: 'E-mail do destinatário inválido',
+        },
+      },
+    },
+
+    assunto: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
+    conteudo: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+
+    dataEnvio: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      field: 'data_envio',
+    },
+
+    enviada: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+
+  },
+  {
+    tableName: 'notificacoes',
+    timestamps: true,
+    underscored: true,
+  }
 );
 
 module.exports = Notificacao;
