@@ -47,7 +47,7 @@ router.post('/teste-email', async (req, res, next) => {
     const resultado = await EmailService.enviar(
       'teste@exemplo.com',
       'Teste da API de Notificações',
-      '<h1>Funcionou!</h1><p>Este e-mail foi enviado pela nossa API.</p>'
+      '<h1>Funcionou!</h1><p>Este e-mail foi enviado pela nossa API.Grupo 3 (Raissa, Maria Eloisa, Isadora, Maria Fernanda).</p>'
     );
 
     console.log('E-mail enviado com sucesso!');
