@@ -1,63 +1,37 @@
 const appEmitter = require('./eventEmitter');
 
-console.log('Observer de boas-vindas carregado!');
-
 const EmailService = require('../services/EmailService');
 
-// ─────────────────────────────────────────────
-// Observer → participante criado
-// ─────────────────────────────────────────────
+appEmitter.on('participante:criado', async (participante) => {
 
-appEmitter.on(
-    'participante:criado',
+  try {
 
-    async (participante) => {
+    console.log(
+      `[OBSERVER] Novo participante criado: ${participante.nome}`
+    );
 
-        try {
+    const html = `
+      <h1>Bem-vindo(a)! 🎉</h1>
 
-            console.log(
-                `[OBSERVER] Novo participante: ${participante.nome}`
-            );
+      <p>Olá <strong>${participante.nome}</strong>,</p>
 
-            const html = `
-                <h2>Bem-vindo à Plataforma de Eventos! 🎉</h2>
+      <p>Seu cadastro foi realizado com sucesso.</p>
+    `;
 
-                <p>Olá <strong>${participante.nome}</strong>,</p>
+    await EmailService.enviar(
+      participante.email,
+      'Bem-vindo à Plataforma de Eventos',
+      html
+    );
 
-                <p>
-                    Seu cadastro foi realizado com sucesso.
-                </p>
+    console.log(
+      `[NOTIFICAÇÃO] E-mail enviado para ${participante.email}`
+    );
 
-                <p>
-                    Agora você já pode participar dos nossos eventos!
-                </p>
+  } catch (erro) {
 
-                <hr>
+    console.error(erro.message);
 
-                <small>
-                    Plataforma de Eventos
-                </small>
-            `;
+  }
 
-            const resultado =
-                await EmailService.enviar(
-                    participante.email,
-                    'Bem-vindo à Plataforma de Eventos!',
-                    html
-                );
-
-            console.log(
-                `[OBSERVER] E-mail de boas-vindas enviado!`
-            );
-
-            console.log(
-                `Preview: ${resultado.previewUrl}`
-            );
-
-        } catch (erro) {
-
-            console.error(erro);
-        }
-
-    }
-);
+});
