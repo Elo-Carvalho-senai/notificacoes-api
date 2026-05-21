@@ -1,10 +1,11 @@
 // src/services/EmailService.js
+
 const nodemailer = require('nodemailer');
 
 let transporter = null;
 
 // Endereço do MailPit (configurado via .env)
-const SMTP_HOST = process.env.SMTP_HOST || 'MAILPIT_IP';
+const SMTP_HOST = process.env.SMTP_HOST || '10.137.146.106';
 const SMTP_PORT = process.env.SMTP_PORT || 1025;
 const MAILPIT_URL = `http://${SMTP_HOST}:8025`;
 
@@ -13,6 +14,7 @@ const MAILPIT_URL = `http://${SMTP_HOST}:8025`;
  * Chamado uma vez ao iniciar o servidor.
  */
 async function inicializar() {
+
   transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: parseInt(SMTP_PORT),
@@ -20,8 +22,9 @@ async function inicializar() {
     tls: { rejectUnauthorized: false },
   });
 
-  // Testar a conexão com o MailPit
+  // Testar conexão
   try {
+
     await transporter.verify();
 
     console.log('═══════════════════════════════════════════');
@@ -40,6 +43,9 @@ async function inicializar() {
 
 /**
  * Envia um e-mail.
+ * @param {string} para
+ * @param {string} assunto
+ * @param {string} html
  */
 async function enviar(para, assunto, html) {
 
@@ -55,6 +61,8 @@ async function enviar(para, assunto, html) {
   });
 
   console.log(`📧 E-mail enviado para ${para}`);
+  console.log(`📨 ID: ${info.messageId}`);
+  console.log(`🔗 Visualizar em: ${MAILPIT_URL}`);
 
   return {
     messageId: info.messageId,
