@@ -2,42 +2,49 @@
 const nodemailer = require('nodemailer');
 
 let transporter = null;
-let contaTeste = null;
+
+// Endereço do MailPit (configurado via .env)
+const SMTP_HOST = process.env.SMTP_HOST || 'MAILPIT_IP';
+const SMTP_PORT = process.env.SMTP_PORT || 1025;
+const MAILPIT_URL = `http://${SMTP_HOST}:8025`;
 
 /**
- * Inicializa o transporter com uma conta de teste do Ethereal.
+ * Inicializa o transporter conectando ao MailPit.
+ * Chamado uma vez ao iniciar o servidor.
  */
 async function inicializar() {
-
-  // cria conta de teste automaticamente
-  contaTeste = await nodemailer.createTestAccount();
-
-  console.log('══════════════════════════════════════');
-  console.log('📧 E-mail de teste configurado!');
-  console.log(`Usuário: ${contaTeste.user}`);
-  console.log(`Senha: ${contaTeste.pass}`);
-  console.log('══════════════════════════════════════');
-
-  // transporter = "carteiro" do email
   transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
+    host: SMTP_HOST,
+    port: parseInt(SMTP_PORT),
     secure: false,
-
-    auth: {
-      user: contaTeste.user,
-      pass: contaTeste.pass,
-    },
+    tls: { rejectUnauthorized: false },
   });
+
+  // Testar a conexão com o MailPit
+  try {
+    await transporter.verify();
+
+    console.log('═══════════════════════════════════════════');
+    console.log('📧 Servidor de e-mail conectado!');
+    console.log(`   SMTP: ${SMTP_HOST}:${SMTP_PORT}`);
+    console.log(`   Painel: ${MAILPIT_URL}`);
+    console.log('═══════════════════════════════════════════');
+
+  } catch (erro) {
+
+    console.error('⚠️ Servidor de e-mail indisponível:', erro.message);
+    console.error('   Verifique se o MailPit está rodando e o IP está correto.');
+
+  }
 }
 
 /**
- * Enviar e-mail
+ * Envia um e-mail.
  */
 async function enviar(para, assunto, html) {
 
   if (!transporter) {
-    throw new Error('EmailService não inicializado');
+    throw new Error('EmailService não inicializado.');
   }
 
   const info = await transporter.sendMail({
@@ -47,15 +54,11 @@ async function enviar(para, assunto, html) {
     html: html,
   });
 
-  // URL para visualizar o e-mail
-  const previewUrl = nodemailer.getTestMessageUrl(info);
-
   console.log(`📧 E-mail enviado para ${para}`);
-  console.log(`Preview: ${previewUrl}`);
 
   return {
     messageId: info.messageId,
-    previewUrl,
+    visualizarEm: MAILPIT_URL,
   };
 }
 
