@@ -6,14 +6,12 @@ const { Notificacao, Participante, Evento, Inscricao } = require('../models');
 
 const EmailService = require('../services/EmailService');
 
-// Observer: escuta o evento 'inscricao:criada'
 appEmitter.on('inscricao:criada', async (inscricao) => {
 
   try {
 
     console.log(`[OBSERVER] Nova inscrição detectada: #${inscricao.id}`);
 
-    // Buscar dados completos da inscrição
     const inscricaoCompleta = await Inscricao.findByPk(inscricao.id, {
 
       include: [
@@ -31,6 +29,7 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
     const { evento, participante } = inscricaoCompleta;
 
     // Montar o HTML do e-mail
+
     const html = `
 
       <h2>Inscrição Confirmada! ✅</h2>
@@ -57,8 +56,9 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
 
     `;
 
-    // Enviar o e-mail
-    const resultado = await EmailService.enviar(
+    // Enviar o e-mail via MailPit
+
+    await EmailService.enviar(
 
       participante.email,
 
@@ -68,45 +68,31 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
 
     );
 
-    // Salvar notificação no banco
+    // Salvar a notificação no banco com status "enviada"
+
     await Notificacao.create({
 
       inscricao_id: inscricao.id,
 
       tipo: 'confirmacao',
 
-      destinatarioEmail: participante.email,
+      destinatario_email: participante.email,
 
       assunto: `Inscrição confirmada: ${evento.nome}`,
 
       conteudo: html,
 
+      data_envio: new Date(),
+
       enviada: true,
 
     });
 
-    console.log(`[OBSERVER] E-mail enviado! Preview: ${resultado.previewUrl}`);
+    console.log(`[NOTIFICAÇÃO] Confirmação enviada para ${participante.email}`);
 
   } catch (erro) {
 
-    console.error('[OBSERVER] Erro ao enviar notificação:', erro.message);
-
-  }
-
-});
-
-// Observer: escuta o evento 'inscricao:cancelada'
-appEmitter.on('inscricao:cancelada', async (inscricao) => {
-
-  try {
-
-    console.log(`[OBSERVER] Inscrição #${inscricao.id} cancelada`);
-
-    // Futuramente: enviar e-mail de cancelamento
-
-  } catch (erro) {
-
-    console.error('[OBSERVER] Erro:', erro.message);
+    console.error('[NOTIFICAÇÃO] Erro ao enviar:', erro.message);
 
   }
 
