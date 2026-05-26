@@ -8,30 +8,31 @@
 | 1 | GET /eventos (seed) | ✅ | Eventos retornados corretamente |
 | 2 | POST /eventos | ✅ | Evento criado com sucesso |
 | 3 | POST /participantes | ✅ | Participante criado |
-| 4 | POST /inscricoes | ✅ | Inscrição criada |
+| 4 | POST /inscricoes | ✅ | Inscrição criada com sucesso |
 | 5 | Verificar e-mail enviado | ✅ | E-mail exibido no MailPit |
-| 6 | GET /notificacoes | ✅ | Histórico retornado |
-| 7 | Inscrição duplicada | ✅ | Erro tratado corretamente |
-| 8 | PATCH cancelar inscrição | ✅ | Status alterado |
-| 9 | E-mail de cancelamento | ✅ | Template funcionando |
-| 10 | GET /notificacoes/estatisticas | ✅ | Estatísticas corretas |
+| 6 | GET /notificacoes | ✅ | Histórico retornado corretamente |
+| 7 | Inscrição duplicada | ✅ | Regra de validação funcionando |
+| 8 | PATCH cancelar inscrição | ✅ | Status alterado para cancelada |
+| 9 | E-mail de cancelamento | ✅ | Template funcionando corretamente |
+| 10 | GET /notificacoes/estatisticas | ✅ | Estatísticas retornadas corretamente |
 | 11 | POST /notificacoes/:id/reenviar | ✅ | Reenvio funcionando |
-| 12 | GET /exportar/inscricoes/xml | ✅ | XML gerado |
-| 13 | GET /relatorio/inscricoes/csv | ✅ | CSV gerado |
-| 14 | Upload de banner | ✅ | Upload funcionando |
+| 12 | GET /exportar/inscricoes/xml | ✅ | XML gerado corretamente |
+| 13 | GET /relatorio/inscricoes/csv | ✅ | Relatório gerado corretamente |
+| 14 | Upload de banner | ✅ | Upload realizado com sucesso |
 | 15 | GET /api-docs | ✅ | Swagger funcionando |
 | 16 | Reiniciar servidor | ✅ | Servidor reiniciado sem erros |
 | 17 | Persistência após reinício | ✅ | Dados mantidos no banco |
 
 ## Problemas encontrados
-- Erro de alias no Sequelize (`as`)
-- Observer não encontrava dados relacionados
-- Swagger não configurado inicialmente
-- Problema no template de confirmação
+
+- Necessidade de validar os relacionamentos do Sequelize para garantir o funcionamento dos includes.
+- Necessidade de verificar o observer de notificações durante os testes.
+- Documentação Swagger precisava ser revisada e atualizada.
 
 ## Correções feitas
-- Ajustado `include` com aliases corretos
-- Refatorado observer
-- Configurado Swagger
-- Corrigido template de e-mail
-- Ajustadas rotas de exportação
+
+- Validados os relacionamentos entre Evento, Participante, Inscrição e Notificação.
+- Testado e validado o observer de notificações.
+- Revisada a configuração dos includes e aliases (`as`).
+- Atualizada a documentação Swagger das rotas de notificações.
+- Realizados testes de envio, cancelamento e reenvio de e-mails.
