@@ -1,67 +1,119 @@
 const express = require('express');
+
 const router = express.Router();
 
-const {
-  Notificacao,
-  Inscricao,
-  Evento,
-  Participante
-} = require('../models');
+const NotificacaoService = require('../services/NotificacaoService');
 
 const EmailService = require('../services/EmailService');
 
-// GET /notificacoes
+// GET /notificacoes — listar com filtros
+
 router.get('/', async (req, res, next) => {
+
   try {
-    const notificacoes = await Notificacao.findAll({
-      include: [{
-        model: Inscricao,
-        as: 'inscricao',
-        include: [
-          {
-            model: Evento,
-            as: 'evento',
-            attributes: ['nome']
-          },
-          {
-            model: Participante,
-            as: 'participante',
-            attributes: ['nome', 'email']
-          },
-        ],
-      }],
-      order: [['createdAt', 'DESC']],
+
+    const notificacoes = await NotificacaoService.listarTodas({
+
+      tipo: req.query.tipo,
+
+      enviada: req.query.enviada,
+
     });
 
     res.json(notificacoes);
+
   } catch (erro) {
+
     next(erro);
+
   }
+
 });
 
-// POST /notificacoes/teste-email — enviar e-mail de teste
-router.post('/teste-email', async (req, res, next) => {
+// GET /notificacoes/estatisticas — dashboard de envios
+
+router.get('/estatisticas', async (req, res, next) => {
+
   try {
-    console.log('Iniciando envio de e-mail de teste...');
 
-    const resultado = await EmailService.enviar(
-      'teste@exemplo.com',
-      'Teste da API de Notificações',
-      '<h1>Funcionou!</h1><p>Este e-mail foi enviado pela nossa API.Grupo 3 (Raissa, Maria Eloisa, Isadora, Maria Fernanda).</p>'
-    );
+    const stats = await NotificacaoService.obterEstatisticas();
 
-    console.log('E-mail enviado com sucesso!');
+    res.json(stats);
 
-    // Retorna exatamente o formato que o enunciado e o Postman esperam
+  } catch (erro) {
+
+    next(erro);
+
+  }
+
+});
+
+// GET /notificacoes/:id — detalhes de uma notificação
+
+router.get('/:id', async (req, res, next) => {
+
+  try {
+
+    const notificacao = await NotificacaoService.buscarPorId(parseInt(req.params.id));
+
+    res.json(notificacao);
+
+  } catch (erro) {
+
+    next(erro);
+
+  }
+
+});
+
+// POST /notificacoes/:id/reenviar — reenviar uma notificação
+
+router.post('/:id/reenviar', async (req, res, next) => {
+
+  try {
+
+    const resultado = await NotificacaoService.reenviar(parseInt(req.params.id));
+
     res.json({
-      mensagem: 'E-mail de teste enviado!',
-      visualizarEm: resultado.visualizarEm, // Ajustado de previewUrl para visualizarEm
+
+      mensagem: 'Notificação reenviada com sucesso',
+
+      visualizarEm: resultado.visualizarEm,
+
     });
 
   } catch (erro) {
-    console.error('Erro ao enviar e-mail:', erro);
-    next(erro); // Passa o erro para o Express tratar centralizadamente
+
+    next(erro);
+
   }
+
+});
+
+// POST /notificacoes/teste-email — enviar e-mail de teste
+
+router.post('/teste-email', async (req, res, next) => {
+
+  try {
+
+    const resultado = await EmailService.enviar(
+
+      'teste@exemplo.com',
+
+      'Teste da API de Notificações',
+
+      '<h1>Funcionou! 🎉</h1><p>Este e-mail foi enviado pela nossa API.</p>'
+
+    );
+
+    res.json({ mensagem: 'E-mail de teste enviado!', visualizarEm: resultado.visualizarEm });
+
+  } catch (erro) {
+
+    next(erro);
+
+  }
+
 });
 
 module.exports = router;
