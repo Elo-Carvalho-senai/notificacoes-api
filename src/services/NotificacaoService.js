@@ -69,7 +69,7 @@ async function reenviar(id) {
   const notificacao = await buscarPorId(id);
 
   const resultado = await EmailService.enviar(
-    notificacao.destinatario_email,
+    notificacao.destinatarioEmail,
     notificacao.assunto,
     notificacao.conteudo
   );
