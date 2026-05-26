@@ -5,6 +5,9 @@ const cors = require('cors');
 
 const app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+
 // ─────────────────────────────────────────────
 // IMPORTAÇÃO DOS OBSERVERS
 // ─────────────────────────────────────────────
@@ -21,6 +24,7 @@ const eventoRoutes = require('./routes/eventoRoutes');
 const participanteRoutes = require('./routes/participanteRoutes');
 const inscricaoRoutes = require('./routes/inscricaoRoutes');
 const notificacaoRoutes = require('./routes/notificacaoRoutes');
+const exportacaoRoutes = require('./routes/exportacaoRoutes');
 
 // ─────────────────────────────────────────────
 // IMPORTAÇÃO DO MIDDLEWARE DE ERRO
@@ -41,12 +45,16 @@ app.use(express.json());
 // ─────────────────────────────────────────────
 
 app.use('/eventos', eventoRoutes);
-
 app.use('/participantes', participanteRoutes);
-
 app.use('/inscricoes', inscricaoRoutes);
-
 app.use('/notificacoes', notificacaoRoutes);
+app.use('/exportar', exportacaoRoutes);
+
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec)
+);
 
 // ─────────────────────────────────────────────
 // ROTA TESTE

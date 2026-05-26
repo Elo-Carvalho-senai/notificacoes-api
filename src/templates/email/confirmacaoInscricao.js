@@ -2,19 +2,27 @@
 
 const baseTemplate = require('./baseTemplate');
 
-function confirmacaoInscricao(participante, evento) {
+function confirmacaoInscricao(dados) {
+
+  const {
+    participanteNome,
+    eventoNome,
+    eventoData,
+    eventoLocal
+  } = dados;
+
   const conteudo = `
     <h2 style="color: #16a34a; margin-top: 0;">
       ✅ Inscrição Confirmada!
     </h2>
 
     <p>
-      Olá <strong>${participante.nome}</strong>,
+      Olá <strong>${participanteNome}</strong>,
     </p>
 
     <p>
       Sua inscrição no evento
-      <strong>${evento.nome}</strong>
+      <strong>${eventoNome}</strong>
       foi realizada com sucesso!
     </p>
 
@@ -32,12 +40,12 @@ function confirmacaoInscricao(participante, evento) {
 
       <p>
         <strong>Data:</strong>
-        ${new Date(evento.data).toLocaleDateString('pt-BR')}
+        ${new Date(eventoData).toLocaleDateString('pt-BR')}
       </p>
 
       <p>
         <strong>Local:</strong>
-        ${evento.local || 'A definir'}
+        ${eventoLocal || 'A definir'}
       </p>
 
     </div>
@@ -47,10 +55,7 @@ function confirmacaoInscricao(participante, evento) {
     </p>
   `;
 
-  return baseTemplate(
-    'Inscrição Confirmada',
-    conteudo
-  );
+  return baseTemplate(conteudo);
 }
 
 module.exports = confirmacaoInscricao;

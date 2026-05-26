@@ -74,6 +74,9 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
     const evento = dados.evento;
     const participante = dados.participante;
 
+    console.log(evento);
+    console.log(participante);
+
     // Verificações de segurança
 
     if (!evento) {
