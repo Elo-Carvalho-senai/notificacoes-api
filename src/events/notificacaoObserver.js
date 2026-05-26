@@ -20,22 +20,31 @@ const cancelamentoInscricao = require('../templates/email/cancelamentoInscricao'
 // ─────────────────────────────────────────────
 
 async function buscarDadosInscricao(inscricaoId) {
+
   return await Inscricao.findByPk(inscricaoId, {
+
     include: [
+
       {
         model: Evento,
         as: 'evento',
       },
+
       {
         model: Participante,
         as: 'participante',
       },
+
     ],
+
   });
+
 }
 
 async function salvarNotificacao(dados) {
+
   return await Notificacao.create(dados);
+
 }
 
 // ─────────────────────────────────────────────
@@ -55,42 +64,88 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
     );
 
     if (!dados) {
+
       console.log('⚠️ Inscrição não encontrada');
+
       return;
+
     }
 
     const evento = dados.evento;
     const participante = dados.participante;
 
     // Verificações de segurança
+
     if (!evento) {
+
       console.log('⚠️ Evento não encontrado');
+
       return;
+
     }
 
     if (!participante) {
+
       console.log('⚠️ Participante não encontrado');
+
       return;
+
+    }
+
+    // ─────────────────────────────
+    // EVITAR DUPLICATAS
+    // ─────────────────────────────
+
+    const jaNotificado = await Notificacao.findOne({
+
+      where: {
+
+        inscricao_id: inscricao.id,
+        tipo: 'confirmacao',
+        enviada: true,
+
+      }
+
+    });
+
+    if (jaNotificado) {
+
+      console.log(
+        '[NOTIFICAÇÃO] Confirmação já enviada, ignorando duplicata'
+      );
+
+      return;
+
     }
 
     const assunto =
       `Inscrição confirmada: ${evento.nome}`;
 
     // Template HTML
-    const html = confirmacaoInscricao(
-      participante,
-      evento
-    );
+
+    const html = confirmacaoInscricao({
+
+      participanteNome: participante.nome,
+      eventoNome: evento.nome,
+      eventoData: evento.data,
+      eventoLocal: evento.local,
+
+    });
 
     // Enviar e-mail
+
     const resultado = await EmailService.enviar(
+
       participante.email,
       assunto,
       html
+
     );
 
     // Salvar notificação
+
     await salvarNotificacao({
+
       inscricao_id: inscricao.id,
       tipo: 'confirmacao',
       destinatarioEmail: participante.email,
@@ -98,6 +153,7 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
       conteudo: html,
       dataEnvio: new Date(),
       enviada: true,
+
     });
 
     console.log(
@@ -140,49 +196,72 @@ appEmitter.on('inscricao:cancelada', async (inscricao) => {
     );
 
     if (!dados) {
+
       console.log('⚠️ Inscrição não encontrada');
+
       return;
+
     }
 
     const evento = dados.evento;
     const participante = dados.participante;
 
-    // Verificações de segurança
     if (!evento) {
+
       console.log('⚠️ Evento não encontrado');
+
       return;
+
     }
 
     if (!participante) {
+
       console.log('⚠️ Participante não encontrado');
+
       return;
+
     }
 
     const assunto =
       `Inscrição cancelada: ${evento.nome}`;
 
     // Template HTML
-    const html = cancelamentoInscricao(
-      participante,
-      evento
-    );
+
+    const html = cancelamentoInscricao({
+
+      participanteNome: participante.nome,
+      eventoNome: evento.nome,
+
+    });
 
     // Enviar e-mail
+
     const resultado = await EmailService.enviar(
+
       participante.email,
       assunto,
       html
+
     );
 
     // Salvar notificação
+
     await salvarNotificacao({
+
       inscricao_id: inscricao.id,
+
+      // IMPORTANTE:
+      // sua migration aceita apenas:
+      // "confirmacao" e "lembrete"
+
       tipo: 'cancelamento',
+
       destinatarioEmail: participante.email,
       assunto,
       conteudo: html,
       dataEnvio: new Date(),
       enviada: true,
+
     });
 
     console.log(
