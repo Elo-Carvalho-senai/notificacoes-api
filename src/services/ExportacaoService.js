@@ -1,5 +1,6 @@
 const { Inscricao, Evento, Participante } = require("../models");
 
+// Exportar inscrições para XML
 async function exportarInscricoesXML() {
 
   const inscricoes = await Inscricao.findAll({

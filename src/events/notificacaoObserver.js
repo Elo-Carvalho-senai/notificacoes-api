@@ -1,5 +1,3 @@
-// src/events/notificacaoObserver.js
-
 const appEmitter = require('./eventEmitter');
 
 const {
@@ -15,9 +13,7 @@ const EmailService = require('../services/EmailService');
 const confirmacaoInscricao = require('../templates/email/confirmacaoInscricao');
 const cancelamentoInscricao = require('../templates/email/cancelamentoInscricao');
 
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
+// Helpers
 
 async function buscarDadosInscricao(inscricaoId) {
 
@@ -47,9 +43,7 @@ async function salvarNotificacao(dados) {
 
 }
 
-// ─────────────────────────────────────────────
-// OBSERVER → INSCRIÇÃO CRIADA
-// ─────────────────────────────────────────────
+// OBSERVER → Inscrição Criada
 
 appEmitter.on('inscricao:criada', async (inscricao) => {
 
@@ -95,9 +89,7 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
 
     }
 
-    // ─────────────────────────────
-    // EVITAR DUPLICATAS
-    // ─────────────────────────────
+    // Enviar Duplicatas
 
     const jaNotificado = await Notificacao.findOne({
 
@@ -182,9 +174,7 @@ appEmitter.on('inscricao:criada', async (inscricao) => {
 
 });
 
-// ─────────────────────────────────────────────
-// OBSERVER → INSCRIÇÃO CANCELADA
-// ─────────────────────────────────────────────
+// OBSERVER → Inscrição Cancelada
 
 appEmitter.on('inscricao:cancelada', async (inscricao) => {
 
@@ -254,7 +244,7 @@ appEmitter.on('inscricao:cancelada', async (inscricao) => {
       inscricao_id: inscricao.id,
 
       // IMPORTANTE:
-      // sua migration aceita apenas:
+      // aceita apenas:
       // "confirmacao" e "lembrete"
 
       tipo: 'cancelamento',

@@ -10,6 +10,7 @@ const EmailService = require("./services/EmailService");
 
 const PORT = process.env.PORT || 3000;
 
+// Função para iniciar o servidor
 async function iniciar() {
 
   try {

@@ -1,5 +1,3 @@
-// src/templates/email/cancelamentoInscricao.js
-
 const baseTemplate = require('./baseTemplate');
 
 function cancelamentoInscricao(participante, evento) {

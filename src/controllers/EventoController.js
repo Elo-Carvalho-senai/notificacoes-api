@@ -1,4 +1,3 @@
-// src/controllers/EventoController.js
 const EventoService = require('../services/EventoService');
 const cache = require('../config/cache');
 

@@ -3,6 +3,7 @@ const { NotFoundError, ValidationError } = require("../errors/AppError");
 const { Op } = require("sequelize"); // ✅ melhor importar uma vez só
 const appEmitter = require('../events/eventEmitter');
 
+// Listar todos os eventos com filtros
 async function listarTodos(opcoes = {}) {
   const {
     pagina = 1,
@@ -34,11 +35,12 @@ async function listarTodos(opcoes = {}) {
   };
 }
 
+// Listar eventos futuros
 async function listarFuturos() {
   const eventos = await Evento.findAll({
     where: {
       data: {
-        [Op.gt]: new Date() // ✅ Parte 2 (correto)
+        [Op.gt]: new Date() 
       }
     },
     order: [['data', 'ASC']],
@@ -47,6 +49,7 @@ async function listarFuturos() {
   return eventos;
 }
 
+// Buscar evento por ID
 async function buscarPorId(id) {
   const evento = await Evento.findByPk(id);
 
@@ -57,34 +60,30 @@ async function buscarPorId(id) {
   return evento;
 }
 
+// Criar novo evento
 async function criar(dados) {
 
   try {
-
     const novoEvento = await Evento.create(dados);
 
     // Emitir evento
     appEmitter.emit('evento:criado', novoEvento);
-
     return novoEvento;
 
   } catch (erro) {
 
     if (erro.name === "SequelizeValidationError") {
-
       const mensagens =
         erro.errors.map(e => e.message).join("; ");
 
       throw new ValidationError(mensagens);
-
     }
-
     throw erro;
-
   }
 
 }
 
+// Atualizar evento
 async function atualizar(id, dados) {
   const evento = await Evento.findByPk(id);
 
@@ -104,6 +103,7 @@ async function atualizar(id, dados) {
   }
 }
 
+// Deletar evento
 async function deletar(id) {
   const evento = await Evento.findByPk(id);
 

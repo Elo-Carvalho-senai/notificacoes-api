@@ -1,5 +1,3 @@
-// src/services/ParticipanteService.js
-
 const { Participante } = require('../models');
 
 const {
@@ -9,9 +7,7 @@ const {
 
 const appEmitter = require('../events/eventEmitter');
 
-// ─────────────────────────────────────────────
-// LISTAR TODOS
-// ─────────────────────────────────────────────
+// Listar todos os participantes
 
 async function listarTodos() {
 
@@ -23,9 +19,7 @@ async function listarTodos() {
 
 }
 
-// ─────────────────────────────────────────────
-// BUSCAR POR ID
-// ─────────────────────────────────────────────
+// Buscar por ID
 
 async function buscarPorId(id) {
 
@@ -42,9 +36,7 @@ async function buscarPorId(id) {
 
 }
 
-// ─────────────────────────────────────────────
-// CRIAR
-// ─────────────────────────────────────────────
+// Criar novo participante
 
 async function criar(dados) {
 
@@ -86,9 +78,7 @@ async function criar(dados) {
 
 }
 
-// ─────────────────────────────────────────────
-// ATUALIZAR
-// ─────────────────────────────────────────────
+// Atualizar participante
 
 async function atualizar(id, dados) {
 
@@ -128,9 +118,7 @@ async function atualizar(id, dados) {
 
 }
 
-// ─────────────────────────────────────────────
-// DELETAR
-// ─────────────────────────────────────────────
+// Deletar participante
 
 async function deletar(id) {
 

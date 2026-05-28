@@ -13,7 +13,6 @@ const sequelize = new Sequelize(
   }
 );
 
-// (opcional, mas ótimo pra debug)
 sequelize
   .authenticate()
   .then(() => {

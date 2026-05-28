@@ -2,9 +2,7 @@ const fs = require('fs');
 
 const appEmitter = require('./eventEmitter');
 
-// ─────────────────────────────────────────────
 // Observer → evento criado
-// ─────────────────────────────────────────────
 
 appEmitter.on('evento:criado', (evento) => {
 

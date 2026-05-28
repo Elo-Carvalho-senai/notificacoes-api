@@ -1,7 +1,6 @@
-// src/templates/email/lembreteEvento.js
-
 const baseTemplate = require('./baseTemplate');
 
+// Template para lembrete de evento
 function lembreteEvento(dados) {
 
     const {

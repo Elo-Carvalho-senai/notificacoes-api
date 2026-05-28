@@ -58,7 +58,7 @@ const Evento = sequelize.define(
       },
     },
 
-    // CAMPO DE BANNER (UPLOAD)
+    // Campo de Banner (Upload)
     banner: {
       type: DataTypes.STRING,
       allowNull: true,

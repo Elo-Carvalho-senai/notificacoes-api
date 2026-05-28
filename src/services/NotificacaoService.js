@@ -3,6 +3,7 @@ const EmailService = require('./EmailService');
 const { NotFoundError } = require('../errors/AppError');
 const sequelize = require('sequelize');
 
+// Listar todas as notificações com filtros
 async function listarTodas(filtros = {}) {
   const where = {};
 
@@ -38,6 +39,7 @@ async function listarTodas(filtros = {}) {
   });
 }
 
+// Buscar notificação por ID
 async function buscarPorId(id) {
   const notificacao = await Notificacao.findByPk(id, {
     include: [
@@ -65,6 +67,7 @@ async function buscarPorId(id) {
   return notificacao;
 }
 
+// Reenviar notificação por ID
 async function reenviar(id) {
   const notificacao = await buscarPorId(id);
 
@@ -85,6 +88,7 @@ async function reenviar(id) {
   };
 }
 
+// Obter estatísticas de notificações
 async function obterEstatisticas() {
   const total = await Notificacao.count();
 

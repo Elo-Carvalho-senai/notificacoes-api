@@ -1,5 +1,3 @@
-// src/templates/email/confirmacaoInscricao.js
-
 const baseTemplate = require('./baseTemplate');
 
 function confirmacaoInscricao(dados) {

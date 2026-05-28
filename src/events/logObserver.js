@@ -2,9 +2,7 @@ const fs = require('fs');
 
 const appEmitter = require('./eventEmitter');
 
-// ─────────────────────────────────────────────
 // Observer → inscrição criada
-// ─────────────────────────────────────────────
 
 appEmitter.on('inscricao:criada', (inscricao) => {
 
@@ -18,9 +16,7 @@ appEmitter.on('inscricao:criada', (inscricao) => {
 
 });
 
-// ─────────────────────────────────────────────
 // Observer → inscrição cancelada
-// ─────────────────────────────────────────────
 
 appEmitter.on('inscricao:cancelada', (inscricao) => {
 

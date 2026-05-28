@@ -1,5 +1,3 @@
-// src/templates/email/baseTemplate.js
-
 function baseTemplate(titulo, conteudo) {
   return `
     <!DOCTYPE html>

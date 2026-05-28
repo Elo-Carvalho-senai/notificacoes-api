@@ -5,9 +5,7 @@ const Participante = require("./ParticipanteModel");
 const Inscricao = require("./InscricaoModel");
 const Notificacao = require("./NotificacaoModel");
 
-// ─────────────────────────────────────────────
-// RELACIONAMENTOS
-// ─────────────────────────────────────────────
+// Relacionamento entre modelos
 
 // Evento → Inscrições
 Evento.hasMany(Inscricao, {
