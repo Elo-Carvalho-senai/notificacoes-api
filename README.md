@@ -9,28 +9,30 @@ API REST para o módulo de notificações por e-mail de uma plataforma de gerenc
 Este projeto faz parte da Situação de Aprendizagem do curso de Programação Back-End do SENAI.
 
 A API é responsável por gerenciar:
-- Eventos
-- Participantes
-- Inscrições
-- Notificações
+
+* Eventos
+* Participantes
+* Inscrições
+* Notificações
 
 E enviar notificações como:
-- Confirmação de inscrição
-- Lembretes de eventos
+
+* Confirmação de inscrição
+* Lembretes de eventos
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- Node.js
-- Express.js
-- MySQL
-- Sequelize
-- Swagger (`swagger-jsdoc` + `swagger-ui-express`)
-- Dotenv
-- Nodemon
-- CORS
-- Multer
+* Node.js
+* Express.js
+* MySQL
+* Sequelize
+* Swagger (`swagger-jsdoc` + `swagger-ui-express`)
+* Dotenv
+* Nodemon
+* CORS
+* Multer
 
 ---
 
@@ -62,12 +64,12 @@ A aplicação segue uma arquitetura em camadas, separando responsabilidades em d
 
 ### Camadas
 
-- **Controller:** recebe requisições e retorna respostas
-- **Service:** contém regras de negócio e validações
-- **Model:** manipula os dados no banco
-- **Routes:** define as rotas da API
-- **Helpers:** funções reutilizáveis
-- **Errors:** tratamento de erros personalizados
+* **Controller:** recebe requisições e retorna respostas
+* **Service:** contém regras de negócio e validações
+* **Model:** manipula os dados no banco
+* **Routes:** define as rotas da API
+* **Helpers:** funções reutilizáveis
+* **Errors:** tratamento de erros personalizados
 
 ### Fluxo da aplicação
 
@@ -81,22 +83,22 @@ Essa estrutura facilita a organização, manutenção e escalabilidade do sistem
 
 ## 🔧 Scripts
 
-| Comando | Descrição |
-|---------|-----------|
-| `npm start` | Inicia o servidor em produção |
-| `npm run dev` | Inicia o servidor em modo desenvolvimento com Nodemon |
-| `npm run db:migrate` | Executa as migrations |
-| `npm run db:migrate:undo` | Desfaz a última migration |
-| `npm run db:seed` | Executa os seeds |
-| `npm run db:reset` | Recria o banco completo |
+| Comando                   | Descrição                                             |
+| ------------------------- | ----------------------------------------------------- |
+| `npm start`               | Inicia o servidor em produção                         |
+| `npm run dev`             | Inicia o servidor em modo desenvolvimento com Nodemon |
+| `npm run db:migrate`      | Executa as migrations                                 |
+| `npm run db:migrate:undo` | Desfaz a última migration                             |
+| `npm run db:seed`         | Executa os seeds                                      |
+| `npm run db:reset`        | Recria o banco completo                               |
 
 ---
 
 ## 🗄️ Banco de Dados
 
-- **SGBD:** MySQL
-- **ORM:** Sequelize
-- **Tabelas:** eventos, participantes, inscricoes, notificacoes
+* **SGBD:** MySQL
+* **ORM:** Sequelize
+* **Tabelas:** eventos, participantes, inscricoes, notificacoes
 
 ---
 
@@ -155,44 +157,77 @@ npm run dev
 
 ### 🎉 Eventos
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | `/eventos` | Lista eventos |
-| GET | `/eventos/:id` | Busca evento por ID |
-| POST | `/eventos` | Cria evento |
-| PUT | `/eventos/:id` | Atualiza evento |
-| DELETE | `/eventos/:id` | Remove evento |
-| POST | `/eventos/:id/banner` | Upload de banner |
+| Método | Rota                  | Descrição           |
+| ------ | --------------------- | ------------------- |
+| GET    | `/eventos`            | Lista eventos       |
+| GET    | `/eventos/:id`        | Busca evento por ID |
+| POST   | `/eventos`            | Cria evento         |
+| PUT    | `/eventos/:id`        | Atualiza evento     |
+| DELETE | `/eventos/:id`        | Remove evento       |
+| POST   | `/eventos/:id/banner` | Upload de banner    |
 
 ---
 
 ### 👥 Participantes
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | `/participantes` | Lista participantes |
-| POST | `/participantes` | Cadastra participante |
+| Método | Rota             | Descrição             |
+| ------ | ---------------- | --------------------- |
+| GET    | `/participantes` | Lista participantes   |
+| POST   | `/participantes` | Cadastra participante |
 
 ---
 
 ### 📝 Inscrições
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | `/inscricoes` | Lista inscrições |
-| POST | `/inscricoes` | Realiza inscrição |
-| GET | `/inscricoes/evento/:id` | Lista inscrições por evento |
-| PATCH | `/inscricoes/:id/cancelar` | Cancela inscrição |
+| Método | Rota                       | Descrição                   |
+| ------ | -------------------------- | --------------------------- |
+| GET    | `/inscricoes`              | Lista inscrições            |
+| POST   | `/inscricoes`              | Realiza inscrição           |
+| GET    | `/inscricoes/evento/:id`   | Lista inscrições por evento |
+| PATCH  | `/inscricoes/:id/cancelar` | Cancela inscrição           |
+
+---
+
+### 📧 Notificações
+
+| Método | Rota                         | Descrição                                    |
+| ------ | ---------------------------- | -------------------------------------------- |
+| GET    | `/notificacoes`              | Listar notificações (filtros: tipo, enviada) |
+| GET    | `/notificacoes/estatisticas` | Dashboard de envios                          |
+| GET    | `/notificacoes/:id`          | Detalhes da notificação                      |
+| POST   | `/notificacoes/:id/reenviar` | Reenviar notificação                         |
+| POST   | `/notificacoes/teste-email`  | Enviar e-mail de teste                       |
 
 ---
 
 ### 📤 Exportação
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | `/exportar/eventos/json` | Exporta eventos em JSON |
-| GET | `/exportar/eventos/xml` | Exporta eventos em XML |
-| GET | `/exportar/relatorio/inscricoes` | Retorna relatório de inscrições |
+| Método | Rota                             | Descrição                  |
+| ------ | -------------------------------- | -------------------------- |
+| GET    | `/exportar/eventos/xml`          | Eventos em XML             |
+| GET    | `/exportar/eventos/json`         | Eventos em JSON (download) |
+| GET    | `/exportar/relatorio/inscricoes` | Relatório de inscrições    |
+
+---
+
+## 📧 Sistema de Notificações
+
+A API envia e-mails automaticamente utilizando o **Padrão Observer**.
+
+### Tipos de notificações automáticas
+
+* **Confirmação de inscrição** — enviada ao criar uma inscrição
+* **Cancelamento de inscrição** — enviado ao cancelar uma inscrição
+
+### Ambiente de desenvolvimento
+
+Durante o desenvolvimento, os e-mails são capturados pelo **MailPit** (servidor SMTP local).
+
+Visualize os e-mails em:
+
+```bash
+http://MAILPIT_IP:8025
+```
 
 ---
 
@@ -210,8 +245,8 @@ http://localhost:3000/api-docs
 
 Os testes foram realizados utilizando:
 
-- Postman
-- Swagger UI
+* Postman
+* Swagger UI
 
 A collection atualizada está disponível em:
 
@@ -239,16 +274,17 @@ notificacoes-api/
 
 ## 👨‍💻 Integrantes do Grupo
 
-- Elo Carvalho
-- Raissa
-- Maria Fernanda
-- Isadora
+* Elo Carvalho
+* Raissa
+* Maria Fernanda
+* Isadora
 
 ---
 
 ## 📄 Licença
 
 Projeto desenvolvido para fins educacionais no curso Técnico de Desenvolvimento de Sistemas do SENAI.
+
 
 ## 🚀 Como Rodar
 
