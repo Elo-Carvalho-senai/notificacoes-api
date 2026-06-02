@@ -6,44 +6,54 @@ const { Inscricao, Evento, Participante } = require("../models");
 
 /**
  * @swagger
- * /exportacao/inscricoes/xml:
- * get:
- * summary: Exportar inscrições em formato XML
- * description: Gera e exporta um arquivo XML contendo todas as inscrições do sistema.
- * tags: [Exportação]
- * responses:
- * 200:
- * description: Arquivo XML gerado com sucesso para download.
- * content:
- * application/xml:
- * schema:
- * type: string
- * format: binary
+ * /exportar/inscricoes/xml:
+ *   get:
+ *     summary: Exportar inscrições em formato XML
+ *     description: Gera e exporta um arquivo XML contendo todas as inscrições do sistema.
+ *     tags:
+ *       - Exportação
+ *     responses:
+ *       200:
+ *         description: Arquivo XML gerado com sucesso para download.
+ *         content:
+ *           application/xml:
+ *             schema:
+ *               type: string
+ *               format: binary
  */
 router.get("/inscricoes/xml", ExportacaoController.exportarInscricoesXML);
 
 /**
  * @swagger
- * /exportacao/relatorio/inscricoes/csv:
- * get:
- * summary: Exportar relatório de inscrições em formato CSV
- * description: Gera um arquivo CSV com o relatório detalhado das inscrições, incluindo dados do evento e do participante.
- * tags: [Exportação]
- * responses:
- * 200:
- * description: Arquivo CSV gerado com sucesso para download.
- * content:
- * text/csv:
- * schema:
- * type: string
- * format: binary
+ * /exportar/relatorio/inscricoes/csv:
+ *   get:
+ *     summary: Exportar relatório de inscrições em formato CSV
+ *     description: Gera um arquivo CSV com o relatório detalhado das inscrições, incluindo dados do evento e do participante.
+ *     tags:
+ *       - Exportação
+ *     responses:
+ *       200:
+ *         description: Arquivo CSV gerado com sucesso para download.
+ *         content:
+ *           text/csv:
+ *             schema:
+ *               type: string
+ *               format: binary
  */
 router.get('/relatorio/inscricoes/csv', async (req, res, next) => {
   try {
     const inscricoes = await Inscricao.findAll({
       include: [
-        { model: Evento, as: 'evento', attributes: ['nome', 'data'] },
-        { model: Participante, as: 'participante', attributes: ['nome', 'email'] },
+        {
+          model: Evento,
+          as: 'evento',
+          attributes: ['nome', 'data']
+        },
+        {
+          model: Participante,
+          as: 'participante',
+          attributes: ['nome', 'email']
+        },
       ],
       raw: true,
       nest: true,
