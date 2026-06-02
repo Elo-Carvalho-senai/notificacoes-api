@@ -79,7 +79,7 @@ async function reenviar(id) {
 
   await notificacao.update({
     enviada: true,
-    data_envio: new Date()
+    dataEnvio: new Date()
   });
 
   return {
