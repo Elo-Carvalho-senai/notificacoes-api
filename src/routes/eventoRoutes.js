@@ -40,34 +40,54 @@ const cacheMiddleware = require("../middlewares/cacheMiddleware");
  *               example: NotFoundError
  *             mensagem:
  *               type: string
- *               example: Evento não encontrado
+ *               example: Evento não encontrado(a)
  *             statusCode:
  *               type: integer
  *               example: 404
  */
 
+// =====================
+// ROTAS CRUD
+// =====================
+
 /**
  * @swagger
  * /eventos:
  *   get:
- *     summary: Listar eventos
+ *     summary: Listar eventos com paginação e filtros
  *     tags: [Eventos]
+ *     parameters:
+ *       - in: query
+ *         name: pagina
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: porPagina
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *       - in: query
+ *         name: busca
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: ordenarPor
+ *         schema:
+ *           type: string
+ *           default: data
+ *       - in: query
+ *         name: ordem
+ *         schema:
+ *           type: string
+ *           enum: [ASC, DESC]
+ *           default: ASC
  *     responses:
  *       200:
  *         description: Lista de eventos
  */
 router.get("/", cacheMiddleware(30), EventoController.index);
 
-/**
- * @swagger
- * /eventos/futuros:
- *   get:
- *     summary: Listar eventos futuros
- *     tags: [Eventos]
- *     responses:
- *       200:
- *         description: Lista de eventos futuros
- */
 router.get("/futuros", EventoController.futuros);
 
 /**
@@ -85,68 +105,28 @@ router.get("/futuros", EventoController.futuros);
  *     responses:
  *       200:
  *         description: Evento encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Evento'
  *       404:
  *         description: Evento não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
 router.get("/:id", cacheMiddleware(60), EventoController.show);
 
-/**
- * @swagger
- * /eventos:
- *   post:
- *     summary: Criar evento
- *     tags: [Eventos]
- *     responses:
- *       201:
- *         description: Evento criado com sucesso
- */
 router.post("/", EventoController.store);
-
-/**
- * @swagger
- * /eventos/{id}:
- *   put:
- *     summary: Atualizar evento
- *     tags: [Eventos]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Evento atualizado
- *       404:
- *         description: Evento não encontrado
- */
 router.put("/:id", EventoController.update);
-
-/**
- * @swagger
- * /eventos/{id}:
- *   delete:
- *     summary: Excluir evento
- *     tags: [Eventos]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Evento removido
- *       404:
- *         description: Evento não encontrado
- */
 router.delete("/:id", EventoController.destroy);
 
 /**
  * @swagger
  * /eventos/{id}/banner:
  *   post:
- *     summary: Upload de banner do evento
+ *     summary: Fazer upload do banner do evento
  *     tags: [Eventos]
  *     parameters:
  *       - in: path
@@ -165,26 +145,38 @@ router.delete("/:id", EventoController.destroy);
  *               banner:
  *                 type: string
  *                 format: binary
+ *                 description: Imagem do banner
  *     responses:
  *       200:
- *         description: Banner enviado com sucesso
+ *         description: Banner atualizado com sucesso
+ *       400:
+ *         description: Nenhum arquivo enviado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  *       404:
  *         description: Evento não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
+
+// =====================
+// UPLOAD DE BANNER
+// =====================
+
 router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
   try {
     const evento = await Evento.findByPk(req.params.id);
 
     if (!evento) {
-      return res.status(404).json({
-        erro: "Evento não encontrado"
-      });
+      return res.status(404).json({ erro: "Evento não encontrado" });
     }
 
     if (!req.file) {
-      return res.status(400).json({
-        erro: "Nenhum arquivo enviado"
-      });
+      return res.status(400).json({ erro: "Nenhum arquivo enviado" });
     }
 
     const caminhoBanner = `/uploads/${req.file.filename}`;

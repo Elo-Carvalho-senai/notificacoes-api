@@ -43,9 +43,13 @@ const InscricaoController = require("../controllers/InscricaoController");
  *             participanteId: 1
  *     responses:
  *       201:
- *         description: Inscrição criada
+ *         description: Inscrição criada com sucesso
  *       400:
- *         description: Erro na criação
+ *         description: Dados inválidos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
 router.post("/", InscricaoController.store);
 
@@ -58,6 +62,12 @@ router.post("/", InscricaoController.store);
  *     responses:
  *       200:
  *         description: Lista de inscrições
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Inscricao'
  */
 router.get("/", InscricaoController.index);
 
@@ -76,6 +86,18 @@ router.get("/", InscricaoController.index);
  *     responses:
  *       200:
  *         description: Lista de inscrições do evento
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Inscricao'
+ *       404:
+ *         description: Evento não encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
 router.get("/evento/:eventoId", InscricaoController.listarPorEvento);
 
@@ -93,9 +115,13 @@ router.get("/evento/:eventoId", InscricaoController.listarPorEvento);
  *           type: integer
  *     responses:
  *       200:
- *         description: Inscrição cancelada
+ *         description: Inscrição cancelada com sucesso
  *       404:
  *         description: Inscrição não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
 router.patch("/:id/cancelar", InscricaoController.cancelar);
 
@@ -114,8 +140,16 @@ router.patch("/:id/cancelar", InscricaoController.cancelar);
  *     responses:
  *       200:
  *         description: Detalhes da inscrição
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Inscricao'
  *       404:
  *         description: Inscrição não encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Erro'
  */
 router.get("/:id/detalhes", InscricaoController.detalhes);
 
