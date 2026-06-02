@@ -7,12 +7,17 @@ const { create } = require('xmlbuilder2');
 /**
  * @swagger
  * /exportar/eventos/xml:
- *   get:
- *     summary: Exporta eventos em XML
- *     tags: [Exportação]
- *     responses:
- *       200:
- *         description: Lista de eventos em XML
+ * get:
+ * summary: Exporta eventos em XML
+ * tags: [Exportação]
+ * responses:
+ * 200:
+ * description: Lista de eventos em XML
+ * content:
+ * application/xml:
+ * schema:
+ * type: string
+ * format: binary
  */
 
 // GET /exportar/eventos/xml
@@ -49,12 +54,18 @@ router.get('/eventos/xml', async (req, res, next) => {
 /**
  * @swagger
  * /exportar/eventos/json:
- *   get:
- *     summary: Exporta eventos em JSON
- *     tags: [Exportação]
- *     responses:
- *       200:
- *         description: Download do arquivo JSON
+ * get:
+ * summary: Exporta eventos em JSON
+ * tags: [Exportação]
+ * responses:
+ * 200:
+ * description: Download do arquivo JSON contendo a lista de eventos
+ * content:
+ * application/json:
+ * schema:
+ * type: array
+ * items:
+ * type: object
  */
 
 // GET /exportar/eventos/json
@@ -78,12 +89,26 @@ router.get('/eventos/json', async (req, res, next) => {
 /**
  * @swagger
  * /exportar/relatorio/inscricoes:
- *   get:
- *     summary: Relatório de inscrições por evento
- *     tags: [Relatórios]
- *     responses:
- *       200:
- *         description: Relatório completo das inscrições
+ * get:
+ * summary: Relatório de inscrições por evento
+ * tags: [Relatórios]
+ * responses:
+ * 200:
+ * description: Relatório JSON completo das inscrições agrupadas por evento
+ * content:
+ * application/json:
+ * schema:
+ * type: object
+ * properties:
+ * geradoEm:
+ * type: string
+ * format: date-time
+ * totalEventos:
+ * type: integer
+ * relatorio:
+ * type: array
+ * items:
+ * type: object
  */
 
 // GET /exportar/relatorio/inscricoes
@@ -130,12 +155,17 @@ router.get('/relatorio/inscricoes', async (req, res, next) => {
 /**
  * @swagger
  * /exportar/relatorio/inscricoes/csv:
- *   get:
- *     summary: Exporta relatório de inscrições em CSV
- *     tags: [Relatórios]
- *     responses:
- *       200:
- *         description: Download do arquivo CSV
+ * get:
+ * summary: Exporta relatório de inscrições em CSV
+ * tags: [Relatórios]
+ * responses:
+ * 200:
+ * description: Download do arquivo CSV contendo a listagem plana de inscrições
+ * content:
+ * text/csv:
+ * schema:
+ * type: string
+ * format: binary
  */
 
 // GET /exportar/relatorio/inscricoes/csv
