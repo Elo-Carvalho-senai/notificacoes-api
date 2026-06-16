@@ -292,4 +292,4 @@ docs/postman-collection.json
 
 ## 📄 Licença
 
-Projeto acadêmico desenvolvido para o curso Técnico em Desenvolvimento de Sistemas – SENAI.
+Projeto acadêmico desenvolvido para o curso Técnico em Desenvolvimento de Sistemas (DEV-2) – SENAI.
