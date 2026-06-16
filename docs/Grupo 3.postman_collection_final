@@ -1584,6 +1584,170 @@
       ]
     },
     {
+      "name": "aula 27",
+      "item": [
+        {
+          "name": "desafio",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "banner",
+                  "type": "file",
+                  "uuid": "d5335895-64eb-44d3-a27d-8002161e778e",
+                  "src": "/D:/2 DEV/PBE2/aulas/aula-2/notificacoes-api/docs/diagrama-classes.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api-docs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api-docs"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 30",
+      "item": [
+        {
+          "name": "teste 1 - get/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 2 - get/ eventos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 3 - post/ eventos",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Evento Aula 30\",\r\n  \"descricao\": \"Teste final\",\r\n  \"data\": \"2026-12-20\",\r\n  \"local\": \"SENAI\",\r\n  \"capacidade\": 50\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 4 - get/ api-docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api-docs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api-docs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 5 - post/ inscricoes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 6 - /notificacoes/estatisticas",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "listar eventos",
       "request": {
         "method": "GET",
