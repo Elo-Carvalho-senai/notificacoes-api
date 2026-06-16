@@ -40,7 +40,7 @@ async function listarFuturos() {
   const eventos = await Evento.findAll({
     where: {
       data: {
-        [Op.gt]: new Date() 
+        [Op.gt]: new Date()
       }
     },
     order: [['data', 'ASC']],
