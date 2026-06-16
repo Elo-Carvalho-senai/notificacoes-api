@@ -229,21 +229,21 @@ http://localhost:3000/api-docs
 
 ### Notificações
 
-| Método | Endpoint                   |
-| ------ | -------------------------- |
-| GET    | /notificacoes              |
-| GET    | /notificacoes/estatisticas |
-| GET    | /notificacoes/:id          |
-| POST   | /notificacoes/:id/reenviar |
-| POST   | /notificacoes/teste-email  |
+| Método | Endpoint                     | Descrição                       |
+| ------ | ---------------------------- | ------------------------------- |
+| GET    | `/notificacoes`              | Listar (filtros: tipo, enviada) |
+| GET    | `/notificacoes/estatisticas` | Dashboard de envios             |
+| GET    | `/notificacoes/:id`          | Detalhes                        |
+| POST   | `/notificacoes/:id/reenviar` | Reenviar                        |
+| POST   | `/notificacoes/teste-email`  | Enviar e-mail de teste          |
 
 ### Exportação
 
-| Método | Endpoint                       |
-| ------ | ------------------------------ |
-| GET    | /exportar/eventos/xml          |
-| GET    | /exportar/eventos/json         |
-| GET    | /exportar/relatorio/inscricoes |
+| Método | Endpoint                         | Descrição                  |
+| ------ | -------------------------------- | -------------------------- |
+| GET    | `/exportar/eventos/xml`          | Eventos em XML             |
+| GET    | `/exportar/eventos/json`         | Eventos em JSON (download) |
+| GET    | `/exportar/relatorio/inscricoes` | Relatório de inscrições    |
 
 ---
 
