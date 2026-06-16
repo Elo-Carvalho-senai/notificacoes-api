@@ -1,38 +1,61 @@
+
 # 📧 Notificações API
 
-API REST para o módulo de notificações por e-mail de uma plataforma de gerenciamento de eventos.
+API REST desenvolvida para gerenciar notificações por e-mail em uma plataforma de eventos, permitindo o gerenciamento de eventos, participantes, inscrições e notificações automáticas.
+
+![Node.js](https://img.shields.io/badge/Node.js-24+-green)
+![Express](https://img.shields.io/badge/Express-4.x-blue)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)
+![Swagger](https://img.shields.io/badge/Swagger-API_Docs-green)
 
 ---
 
 ## 📋 Sobre o Projeto
 
-Este projeto faz parte da Situação de Aprendizagem do curso de Programação Back-End do SENAI.
+Este projeto foi desenvolvido como parte da Situação de Aprendizagem do curso Técnico em Desenvolvimento de Sistemas do SENAI.
 
-A API é responsável por gerenciar:
+A API é responsável por:
 
-* Eventos
-* Participantes
-* Inscrições
-* Notificações
+* 🎉 Gerenciamento de eventos
+* 👥 Cadastro de participantes
+* 📝 Controle de inscrições
+* 📧 Envio de notificações automáticas por e-mail
 
-E enviar notificações como:
+### Funcionalidades
 
-* Confirmação de inscrição
-* Lembretes de eventos
+* Cadastro, edição e remoção de eventos
+* Cadastro de participantes
+* Realização e cancelamento de inscrições
+* Upload de banners para eventos
+* Exportação de relatórios
+* Dashboard de notificações
+* Documentação completa com Swagger
+* Envio automático de e-mails utilizando o padrão Observer
+
+---
+
+## 👨‍💻 Equipe
+
+* Elo Carvalho
+* Raissa Fernandes
+* Maria Fernanda
+* Isadora
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* Node.js
-* Express.js
-* MySQL
-* Sequelize
-* Swagger (`swagger-jsdoc` + `swagger-ui-express`)
-* Dotenv
-* Nodemon
-* CORS
-* Multer
+| Tecnologia | Finalidade                   |
+| ---------- | ---------------------------- |
+| Node.js    | Runtime JavaScript           |
+| Express.js | Framework Back-End           |
+| MySQL      | Banco de Dados               |
+| Sequelize  | ORM                          |
+| Swagger    | Documentação da API          |
+| Multer     | Upload de Arquivos           |
+| Nodemon    | Desenvolvimento              |
+| Dotenv     | Variáveis de Ambiente        |
+| CORS       | Comunicação entre aplicações |
 
 ---
 
@@ -58,238 +81,215 @@ src/
 
 ---
 
-## 📊 Visão Geral da Arquitetura
+## 📊 Arquitetura
 
-A aplicação segue uma arquitetura em camadas, separando responsabilidades em diferentes partes do sistema.
+A aplicação utiliza arquitetura em camadas para separar responsabilidades e facilitar a manutenção do código.
 
-### Camadas
-
-* **Controller:** recebe requisições e retorna respostas
-* **Service:** contém regras de negócio e validações
-* **Model:** manipula os dados no banco
-* **Routes:** define as rotas da API
-* **Helpers:** funções reutilizáveis
-* **Errors:** tratamento de erros personalizados
-
-### Fluxo da aplicação
+### Fluxo da Aplicação
 
 ```text
-Request → Route → Controller → Service → Model → Response
+Request
+   ↓
+Routes
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Model
+   ↓
+Database
+   ↓
+Response
 ```
 
-Essa estrutura facilita a organização, manutenção e escalabilidade do sistema.
+### Responsabilidades
+
+* **Routes:** Define os endpoints da API.
+* **Controllers:** Recebem requisições e retornam respostas.
+* **Services:** Implementam regras de negócio.
+* **Models:** Manipulam os dados do banco.
+* **Helpers:** Funções auxiliares reutilizáveis.
+* **Errors:** Tratamento centralizado de erros.
 
 ---
 
-## 🔧 Scripts
+## 🚀 Como Executar o Projeto
 
-| Comando                   | Descrição                                             |
-| ------------------------- | ----------------------------------------------------- |
-| `npm start`               | Inicia o servidor em produção                         |
-| `npm run dev`             | Inicia o servidor em modo desenvolvimento com Nodemon |
-| `npm run db:migrate`      | Executa as migrations                                 |
-| `npm run db:migrate:undo` | Desfaz a última migration                             |
-| `npm run db:seed`         | Executa os seeds                                      |
-| `npm run db:reset`        | Recria o banco completo                               |
-
----
-
-## 🗄️ Banco de Dados
-
-* **SGBD:** MySQL
-* **ORM:** Sequelize
-* **Tabelas:** eventos, participantes, inscricoes, notificacoes
-
----
-
-## 🚀 Como Rodar o Projeto
-
-### 1. Clone o repositório
+### 1. Clonar o Repositório
 
 ```bash
 git clone https://github.com/Elo-Carvalho-senai/notificacoes-api-grupo3.git
-```
-
-### 2. Acesse a pasta do projeto
-
-```bash
 cd notificacoes-api-grupo3
 ```
 
-### 3. Instale as dependências
+### 2. Instalar Dependências
 
 ```bash
 npm install
 ```
 
-### 4. Configure o arquivo `.env`
+### 3. Configurar as Variáveis de Ambiente
+
+O projeto já possui um arquivo `.env.example`.
+
+Crie uma cópia para `.env`:
+
+```bash
+cp .env.example .env
+```
+
+Ou crie manualmente um arquivo `.env` utilizando o modelo disponível em `.env.example`.
+
+Exemplo:
 
 ```env
 PORT=3000
+NODE_ENV=development
+
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=notificacoes_api
+DB_NAME=notificacoes_db
 DB_USER=root
-DB_PASS=sua_senha
+DB_PASSWORD=sua_senha_aqui
+
+SMTP_HOST=10.137.146.106
+SMTP_PORT=1025
 ```
 
-### 5. Execute as migrations
+### 4. Executar Migrations
 
 ```bash
 npm run db:migrate
 ```
 
-### 6. Execute os seeds
+### 5. Executar Seeds
 
 ```bash
 npm run db:seed
 ```
 
-### 7. Inicie o servidor
+### 6. Iniciar o Servidor
 
 ```bash
 npm run dev
 ```
 
----
+### 7. Acessar a Aplicação
 
-## 📌 Rotas Principais
+API:
+http://localhost:3000
 
-### 🎉 Eventos
-
-| Método | Rota                  | Descrição           |
-| ------ | --------------------- | ------------------- |
-| GET    | `/eventos`            | Lista eventos       |
-| GET    | `/eventos/:id`        | Busca evento por ID |
-| POST   | `/eventos`            | Cria evento         |
-| PUT    | `/eventos/:id`        | Atualiza evento     |
-| DELETE | `/eventos/:id`        | Remove evento       |
-| POST   | `/eventos/:id/banner` | Upload de banner    |
+Swagger:
+http://localhost:3000/api-docs
 
 ---
 
-### 👥 Participantes
+## 🔧 Scripts Disponíveis
 
-| Método | Rota             | Descrição             |
-| ------ | ---------------- | --------------------- |
-| GET    | `/participantes` | Lista participantes   |
-| POST   | `/participantes` | Cadastra participante |
-
----
-
-### 📝 Inscrições
-
-| Método | Rota                       | Descrição                   |
-| ------ | -------------------------- | --------------------------- |
-| GET    | `/inscricoes`              | Lista inscrições            |
-| POST   | `/inscricoes`              | Realiza inscrição           |
-| GET    | `/inscricoes/evento/:id`   | Lista inscrições por evento |
-| PATCH  | `/inscricoes/:id/cancelar` | Cancela inscrição           |
+| Comando                 | Descrição               |
+| ----------------------- | ----------------------- |
+| npm start               | Executa em produção     |
+| npm run dev             | Executa com Nodemon     |
+| npm run db:migrate      | Executa migrations      |
+| npm run db:migrate:undo | Desfaz última migration |
+| npm run db:seed         | Executa seeds           |
+| npm run db:reset        | Reinicia o banco        |
 
 ---
 
-### 📧 Notificações
+## 📌 Principais Rotas
 
-| Método | Rota                         | Descrição                                    |
-| ------ | ---------------------------- | -------------------------------------------- |
-| GET    | `/notificacoes`              | Listar notificações (filtros: tipo, enviada) |
-| GET    | `/notificacoes/estatisticas` | Dashboard de envios                          |
-| GET    | `/notificacoes/:id`          | Detalhes da notificação                      |
-| POST   | `/notificacoes/:id/reenviar` | Reenviar notificação                         |
-| POST   | `/notificacoes/teste-email`  | Enviar e-mail de teste                       |
+### Eventos
 
----
+| Método | Endpoint            |
+| ------ | ------------------- |
+| GET    | /eventos            |
+| GET    | /eventos/:id        |
+| POST   | /eventos            |
+| PUT    | /eventos/:id        |
+| DELETE | /eventos/:id        |
+| POST   | /eventos/:id/banner |
 
-### 📤 Exportação
+### Participantes
 
-| Método | Rota                             | Descrição                  |
-| ------ | -------------------------------- | -------------------------- |
-| GET    | `/exportar/eventos/xml`          | Eventos em XML             |
-| GET    | `/exportar/eventos/json`         | Eventos em JSON (download) |
-| GET    | `/exportar/relatorio/inscricoes` | Relatório de inscrições    |
+| Método | Endpoint       |
+| ------ | -------------- |
+| GET    | /participantes |
+| POST   | /participantes |
+
+### Inscrições
+
+| Método | Endpoint                 |
+| ------ | ------------------------ |
+| GET    | /inscricoes              |
+| POST   | /inscricoes              |
+| GET    | /inscricoes/evento/:id   |
+| PATCH  | /inscricoes/:id/cancelar |
+
+### Notificações
+
+| Método | Endpoint                   |
+| ------ | -------------------------- |
+| GET    | /notificacoes              |
+| GET    | /notificacoes/estatisticas |
+| GET    | /notificacoes/:id          |
+| POST   | /notificacoes/:id/reenviar |
+| POST   | /notificacoes/teste-email  |
+
+### Exportação
+
+| Método | Endpoint                       |
+| ------ | ------------------------------ |
+| GET    | /exportar/eventos/xml          |
+| GET    | /exportar/eventos/json         |
+| GET    | /exportar/relatorio/inscricoes |
 
 ---
 
 ## 📧 Sistema de Notificações
 
-A API envia e-mails automaticamente utilizando o **Padrão Observer**.
+A API utiliza o padrão de projeto **Observer** para automatizar o envio de notificações.
 
-### Tipos de notificações automáticas
+### Notificações Automáticas
 
-* **Confirmação de inscrição** — enviada ao criar uma inscrição
-* **Cancelamento de inscrição** — enviado ao cancelar uma inscrição
+* ✅ Confirmação de inscrição
+* ✅ Cancelamento de inscrição
+* ✅ Lembretes de eventos
 
-### Ambiente de desenvolvimento
+Durante o desenvolvimento, os e-mails são capturados pelo MailPit.
 
-Durante o desenvolvimento, os e-mails são capturados pelo **MailPit** (servidor SMTP local).
-
-Visualize os e-mails em:
-
-```bash
+```text
 http://MAILPIT_IP:8025
 ```
 
 ---
 
-## 📚 Documentação Swagger
+## 📚 Documentação
 
-A documentação da API pode ser acessada em:
+Swagger disponível em:
 
-```bash
+```text
 http://localhost:3000/api-docs
 ```
 
 ---
 
-## 🧪 Testes da API
+## 🧪 Testes
 
-Os testes foram realizados utilizando:
+Os testes da API foram realizados utilizando:
 
 * Postman
 * Swagger UI
 
-A collection atualizada está disponível em:
+Collection disponível em:
 
-```bash
+```text
 docs/postman-collection.json
 ```
 
 ---
 
-## 📂 Estrutura Final do Projeto
-
-```bash
-notificacoes-api/
-├── src/
-├── uploads/
-├── docs/
-├── .env
-├── .env.example
-├── .gitignore
-├── package.json
-└── README.md
-```
-
----
-
-## 👨‍💻 Integrantes do Grupo
-
-* Elo Carvalho
-* Raissa
-* Maria Fernanda
-* Isadora
-
----
-
 ## 📄 Licença
 
-Projeto desenvolvido para fins educacionais no curso Técnico de Desenvolvimento de Sistemas do SENAI.
-
-
-## 🚀 Como Rodar
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/Elo-Carvalho-senai/notificacoes-api-grupo3.git
-```
+Projeto acadêmico desenvolvido para o curso Técnico em Desenvolvimento de Sistemas – SENAI.
