@@ -1015,6 +1015,739 @@
       ]
     },
     {
+      "name": "aula 21",
+      "item": [
+        {
+          "name": "Criar uma inscrição e ver a notificação",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 5,\r\n  \"participanteId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 22",
+      "item": [
+        {
+          "name": "email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes/teste-email",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes",
+                "teste-email"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TESTE 1 — Criar inscrição",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 5,\r\n  \"participanteId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TESTE 2 — Verificar notificações no banco",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 24",
+      "item": [
+        {
+          "name": "todas as notificações",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "só configurações",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes?tipo=confirmacao",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ],
+              "query": [
+                {
+                  "key": "tipo",
+                  "value": "confirmacao"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "só as enviadas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes?enviada=true",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ],
+              "query": [
+                {
+                  "key": "enviada",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dashboard com contagens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/notificacoes/estatisticas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes",
+                "estatisticas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reenvia e retorna URL",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"mensagem\": \"Notificação reenviada com sucesso\",\r\n  \"previewUrl\": \"https://ethereal.email/message/...\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/notificacoes/1/reenviar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes",
+                "1",
+                "reenviar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 25",
+      "item": [
+        {
+          "name": "teste 1 - listar eventos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 2 — Criar evento novo",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Workshop Node.js\",\r\n  \"descricao\": \"Evento de teste integração\",\r\n  \"data\": \"2026-12-10T19:00:00.000Z\",\r\n  \"local\": \"SENAI\",\r\n  \"capacidade\": 50\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 3 - Criar participante",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Isadora Teste\",\r\n  \"email\": \"isa.teste@email.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/participantes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "participantes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 4 - Criar inscrição",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 6 — Verificar notificação no banco",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 6\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/notificacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 7 — Testar inscrição duplicada",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 8 — Cancelar inscrição",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes/14/cancelar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes",
+                "14",
+                "cancelar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 10 — Estatísticas",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/notificacoes/estatisticas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes",
+                "estatisticas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 11 — Reenviar notificação",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/notificacoes/1/reenviar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "notificacoes",
+                "1",
+                "reenviar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 12 — Exportar XML",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 3\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/exportar/inscricoes/xml",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "exportar",
+                "inscricoes",
+                "xml"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 13 — Exportar relatório",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/exportar/relatorio/inscricoes/csv",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "exportar",
+                "relatorio",
+                "inscricoes",
+                "csv"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 14 — Upload de banner",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "banner",
+                  "type": "file",
+                  "uuid": "d1369ebd-93c1-4c31-bfb7-a464c3025402",
+                  "src": "/C:/Users/NB12-2DEV/OneDrive - SESISENAISP - Escolas/Imagens/33a2ddbc1a736a9e61b331eca8d56f77.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/eventos/2/banner",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos",
+                "2",
+                "banner"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 27",
+      "item": [
+        {
+          "name": "desafio",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "banner",
+                  "type": "file",
+                  "uuid": "d5335895-64eb-44d3-a27d-8002161e778e",
+                  "src": "/D:/2 DEV/PBE2/aulas/aula-2/notificacoes-api/docs/diagrama-classes.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api-docs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api-docs"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "aula 30",
+      "item": [
+        {
+          "name": "teste 1 - get/",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 2 - get/ eventos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 3 - post/ eventos",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nome\": \"Evento Aula 30\",\r\n  \"descricao\": \"Teste final\",\r\n  \"data\": \"2026-12-20\",\r\n  \"local\": \"SENAI\",\r\n  \"capacidade\": 50\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/eventos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "eventos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 4 - get/ api-docs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api-docs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api-docs"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 5 - post/ inscricoes",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"eventoId\": 7,\r\n  \"participanteId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/inscricoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "inscricoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "teste 6 - /notificacoes/estatisticas",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "listar eventos",
       "request": {
         "method": "GET",
