@@ -41,9 +41,9 @@ app.use('/notificacoes', notificacaoRoutes);
 app.use('/exportar', exportacaoRoutes);
 
 app.use(
-  '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec)
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
 );
 
 // ROTA TESTE
