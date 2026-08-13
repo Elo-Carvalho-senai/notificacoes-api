@@ -110,4 +110,28 @@
 =======
   * **Probabilidade de defeito:** Baixa — rota simples de leitura, sem efeitos colaterais.
   * **Impacto se falhar:** Baixo — falha temporária de visualização sem perda ou corrupção de dados.
+<<<<<<< HEAD
 >>>>>>> 06a9183bb4d6e01c76193e707992891b0daa923a
+=======
+
+
+----
+  🎫 Ticket de Saída — Individual (Para entregar no papel)
+Respostas para você preencher na folha de papel:
+
+Com suas palavras: qual a diferença entre defeito e falha?
+
+Defeito (Bug/Erro no código): É a causa imperfeita criada pelo desenvolvedor dentro do código fonte (ex.: um operador <= escrito errado ou uma variável não tratada).
+
+Falha: É o comportamento incorreto visível na execução do sistema para o usuário ou teste (ex.: o sistema retornar um erro 500 ou enviar um e-mail duplicado porque o defeito no código foi executado).
+
+Dê um exemplo de teste não funcional que faria sentido no módulo do seu grupo.
+
+Teste de Carga / Desempenho (Performance): Avaliar se a API de Notificações consegue processar e disparar 1.000 requisições simultâneas de envio de e-mail no endpoint POST /notificacoes mantendo um tempo de resposta inferior a 2 segundos por requisição.
+
+Se o teste "POST /notificacoes retorna 201" falhar, o que esse resultado te diz — e o que ele NÃO te diz?
+
+O que ele DIZ: Diz apenas que a rota de criação de notificações não entregou a resposta esperada no nível de HTTP (a API não retornou o código de status HTTP 201 Created).
+
+O que ele NÃO te diz: Não diz onde ocorreu o problema. Não diz se a falha foi no banco de dados ao salvar, na autenticação do token JWT, no servidor de e-mail que caiu, em uma validação de campo incorreta no controller ou em um erro interno no servidor (500).
+>>>>>>> 23db293b8c7cdb2ded72dd358a89b8118e7c6b0a
