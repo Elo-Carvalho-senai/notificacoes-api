@@ -1,7 +1,7 @@
 # Atividade 01 — Estudo Dirigido: Anatomia do Módulo de Notificações
 **UC:** Testes de Software (TSOF)  
 **Data:** 13/08/2026  
-**Grupo:** [Insira o Nome de Todos os Integrantes Aqui]
+**Grupo:** Isadora, Maria Eloisa, Maria Fernanda e Raissa 
 
 ---
 
