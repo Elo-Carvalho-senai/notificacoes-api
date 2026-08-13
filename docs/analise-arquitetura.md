@@ -1,7 +1,11 @@
 # Atividade 01 — Estudo Dirigido: Anatomia do Módulo de Notificações
 **UC:** Testes de Software (TSOF)  
 **Data:** 13/08/2026  
+<<<<<<< HEAD
 **Grupo:** Isadora, Maria Eloisa, Maria Fernanda e Raíssa  
+=======
+**Grupo:** Isadora, Maria Eloisa, Maria Fernanda e Raissa 
+>>>>>>> 06a9183bb4d6e01c76193e707992891b0daa923a
 
 ---
 
@@ -100,5 +104,10 @@
   * **Probabilidade de defeito:** Alta — Envolve coordenação entre múltiplos Models (`InscricaoModel`, `ParticipanteModel`, `EventoModel`), validação de duplicidade e acionamento de eventos assíncronos de e-mail via `boasVindasObserver.js` / `EmailService.js`.
   * **Impacto se falhar:** Alto — Impede que participantes se inscrevam nos eventos, interrompe o fluxo principal do sistema e impede a entrega das confirmações por e-mail.
 * **Rota de Menor Risco:** `GET /eventos`
+<<<<<<< HEAD
   * **Probabilidade de defeito:** Baixa — Rota somente de leitura, sem efeitos colaterais ou integrações externas.
   * **Impacto se falhar:** Baixo — Causa indisponibilidade temporária de listagem, sem risco de corrupção ou perda de dados no banco.
+=======
+  * **Probabilidade de defeito:** Baixa — rota simples de leitura, sem efeitos colaterais.
+  * **Impacto se falhar:** Baixo — falha temporária de visualização sem perda ou corrupção de dados.
+>>>>>>> 06a9183bb4d6e01c76193e707992891b0daa923a
