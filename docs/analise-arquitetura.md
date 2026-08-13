@@ -96,6 +96,8 @@
   * **Probabilidade de defeito:** Baixa — rota simples de leitura, sem efeitos colaterais.
   * **Impacto se falhar:** Baixo — falha temporária de visualização sem perda ou corrupção de dados.
 
+
+----
   🎫 Ticket de Saída — Individual (Para entregar no papel)
 Respostas para você preencher na folha de papel:
 
