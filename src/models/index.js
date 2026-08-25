@@ -40,6 +40,18 @@ Notificacao.belongsTo(Inscricao, {
     as: "inscricao",
 });
 
+// src/models/index.js
+const Usuario = require("./UsuarioModel");
+// ... (não precisa de relacionamento com as outras entidades)
+module.exports = {
+sequelize,
+Evento,
+Participante,
+Inscricao,
+Notificacao,
+Usuario, // ← adicionar aqui
+};
+
 module.exports = {
     sequelize,
     Evento,
