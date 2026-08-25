@@ -119,8 +119,13 @@ router.get("/futuros", EventoController.futuros);
 router.get("/:id", cacheMiddleware(60), EventoController.show);
 
 router.post("/", EventoController.store);
+router.post("/", authMiddleware, EventoController.store);
+
 router.put("/:id", EventoController.update);
+router.put("/:id", authMiddleware, EventoController.update);
+
 router.delete("/:id", EventoController.destroy);
+router.delete("/:id", authMiddleware, EventoController.destroy);
 
 /**
  * @swagger
@@ -167,7 +172,7 @@ router.delete("/:id", EventoController.destroy);
 // UPLOAD DE BANNER
 // =====================
 
-router.post("/:id/banner", upload.single("banner"), async (req, res, next) => {
+router.post("/:id/banner", authMiddleware, upload.single("banner"), async (req, res, next) => {
   try {
     const evento = await Evento.findByPk(req.params.id);
 
