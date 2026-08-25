@@ -4,6 +4,7 @@ const EventoController = require("../controllers/EventoController");
 const upload = require("../config/upload");
 const { Evento } = require("../models");
 const cacheMiddleware = require("../middlewares/cacheMiddleware");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 /**
  * @swagger
@@ -118,14 +119,91 @@ router.get("/futuros", EventoController.futuros);
  */
 router.get("/:id", cacheMiddleware(60), EventoController.show);
 
-router.post("/", EventoController.store);
+/**
+ * @swagger
+ * /eventos:
+ *   post:
+ *     summary: Criar um novo evento
+ *     tags: [Eventos]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Evento'
+ *     responses:
+ *       201:
+ *         description: Evento criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Evento'
+ *       401:
+ *         description: Não autorizado
+ *       400:
+ *         description: Dados inválidos
+ */
 router.post("/", authMiddleware, EventoController.store);
 
-router.put("/:id", EventoController.update);
+/**
+ * @swagger
+ * /eventos/{id}:
+ *   put:
+ *     summary: Atualizar um evento existente
+ *     tags: [Eventos]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Evento'
+ *     responses:
+ *       200:
+ *         description: Evento atualizado com sucesso
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Evento não encontrado
+ */
 router.put("/:id", authMiddleware, EventoController.update);
 
-router.delete("/:id", EventoController.destroy);
+/**
+ * @swagger
+ * /eventos/{id}:
+ *   delete:
+ *     summary: Remover um evento
+ *     tags: [Eventos]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Evento removido com sucesso
+ *       401:
+ *         description: Não autorizado
+ *       404:
+ *         description: Evento não encontrado
+ */
 router.delete("/:id", authMiddleware, EventoController.destroy);
+
+// =====================
+// UPLOAD DE BANNER
+// =====================
 
 /**
  * @swagger
@@ -133,6 +211,8 @@ router.delete("/:id", authMiddleware, EventoController.destroy);
  *   post:
  *     summary: Fazer upload do banner do evento
  *     tags: [Eventos]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -160,6 +240,8 @@ router.delete("/:id", authMiddleware, EventoController.destroy);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Erro'
+ *       401:
+ *         description: Não autorizado
  *       404:
  *         description: Evento não encontrado
  *         content:
@@ -167,11 +249,6 @@ router.delete("/:id", authMiddleware, EventoController.destroy);
  *             schema:
  *               $ref: '#/components/schemas/Erro'
  */
-
-// =====================
-// UPLOAD DE BANNER
-// =====================
-
 router.post("/:id/banner", authMiddleware, upload.single("banner"), async (req, res, next) => {
   try {
     const evento = await Evento.findByPk(req.params.id);
