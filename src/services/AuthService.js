@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const { Usuario } = require("../models");
+
 const {
   ValidationError,
   UnauthorizedError,
@@ -10,9 +11,31 @@ const {
 async function registrar(dados) {
   const { nome, email, senha } = dados;
 
-  if (!senha || senha.length < 6) {
+  if (!nome || !email || !senha) {
+    throw new ValidationError(
+      "Nome, e-mail e senha são obrigatórios"
+    );
+  }
+
+  if (senha.length < 6) {
     throw new ValidationError(
       "Senha deve ter pelo menos 6 caracteres"
+    );
+  }
+
+  if (!Usuario) {
+    throw new Error(
+      "Model Usuario não foi encontrado em ../models"
+    );
+  }
+
+  const usuarioExistente = await Usuario.findOne({
+    where: { email },
+  });
+
+  if (usuarioExistente) {
+    throw new ValidationError(
+      "E-mail já cadastrado"
     );
   }
 
@@ -32,6 +55,12 @@ async function registrar(dados) {
 }
 
 async function login(email, senha) {
+  if (!email || !senha) {
+    throw new ValidationError(
+      "E-mail e senha são obrigatórios"
+    );
+  }
+
   const usuario = await Usuario.findOne({
     where: { email },
   });

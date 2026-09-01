@@ -20,4 +20,17 @@ class ValidationError extends AppError {
     }
 }
 
-module.exports = { AppError, NotFoundError, ValidationError };
+// Classe necessária para os erros 401 de Autenticação/JWT
+class UnauthorizedError extends AppError {
+    constructor(mensagem = "Não autorizado") {
+        super(mensagem, 401);
+        this.name = "UnauthorizedError";
+    }
+}
+
+module.exports = { 
+    AppError, 
+    NotFoundError, 
+    ValidationError, 
+    UnauthorizedError // <-- Adicionado aqui
+};

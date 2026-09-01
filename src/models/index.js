@@ -4,8 +4,9 @@ const Evento = require("./EventoModel");
 const Participante = require("./ParticipanteModel");
 const Inscricao = require("./InscricaoModel");
 const Notificacao = require("./NotificacaoModel");
+const Usuario = require("./UsuarioModel"); // Importação do model Usuario
 
-// Relacionamento entre modelos
+// --- Relacionamentos entre modelos ---
 
 // Evento → Inscrições
 Evento.hasMany(Inscricao, {
@@ -40,22 +41,12 @@ Notificacao.belongsTo(Inscricao, {
     as: "inscricao",
 });
 
-// src/models/index.js
-const Usuario = require("./UsuarioModel");
-// ... (não precisa de relacionamento com as outras entidades)
-module.exports = {
-sequelize,
-Evento,
-Participante,
-Inscricao,
-Notificacao,
-Usuario, // ← adicionar aqui
-};
-
+// --- Exportação Unificada dos Modelos ---
 module.exports = {
     sequelize,
     Evento,
     Participante,
     Inscricao,
     Notificacao,
+    Usuario, // Agora o Usuario está corretamente incluído na exportação!
 };
